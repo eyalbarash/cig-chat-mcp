@@ -129,8 +129,10 @@ describe('recipient cap', () => {
 
 describe('exact recipient lists', () => {
   it('counts an explicit list without calling the API', async () => {
+    // broadcast-to-list names its recipients outright, so there is nothing to estimate.
+    const { audienceFrom: _omitted, ...toList } = BROADCAST;
     const outcome = await gate({}, 0).check(
-      { ...BROADCAST, name: 'cigchat_broadcast_to_list', audienceFrom: undefined },
+      { ...toList, name: 'cigchat_broadcast_to_list' },
       { user_ns_list: ['a', 'b', 'c'] },
       undefined,
     );

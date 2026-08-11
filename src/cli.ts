@@ -8,6 +8,20 @@ import { loadConfig, tokenHint } from './config.js';
 import { CigChatClient } from './client.js';
 import { ToolRegistry } from './registry.js';
 
+/**
+ * `cigchat-mcp --list-tools | head` closes stdout while we are still writing to it.
+ * Without this, Node raises an unhandled EPIPE and exits non-zero — piping into `head`,
+ * `grep -q` or `less` is normal CLI usage, not an error.
+ */
+function ignoreBrokenPipe(): void {
+  for (const stream of [process.stdout, process.stderr]) {
+    stream.on('error', (err: NodeJS.ErrnoException) => {
+      if (err.code === 'EPIPE') process.exit(0);
+      throw err;
+    });
+  }
+}
+
 const HELP = `cigchat-mcp ${SERVER_VERSION} — MCP server for the cig.chat API
 
 Usage:
@@ -62,6 +76,8 @@ async function check(): Promise<number> {
 }
 
 export async function main(argv: string[] = process.argv.slice(2)): Promise<void> {
+  ignoreBrokenPipe();
+
   if (argv.includes('--help') || argv.includes('-h')) {
     process.stdout.write(HELP);
     return;
