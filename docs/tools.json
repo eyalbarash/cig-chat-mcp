@@ -1,0 +1,1798 @@
+{
+  "package": "@cig-chat/mcp",
+  "version": "0.1.0",
+  "counts": {
+    "tools": 243,
+    "toolsets": 11,
+    "endpoints": 243,
+    "byTier": {
+      "read": 83,
+      "write": 101,
+      "send": 17,
+      "broadcast": 8,
+      "destructive": 34
+    }
+  },
+  "toolsets": [
+    {
+      "id": "subscribers",
+      "label": "Subscribers",
+      "labelHe": "מנויים",
+      "description": "Find, create and update subscribers; tags, labels, fields, opt-in state.",
+      "toolCount": 40
+    },
+    {
+      "id": "flow",
+      "label": "Flow",
+      "labelHe": "תזרים",
+      "description": "Sub-flows, tags, user fields, bot fields, shortcuts, closing notes, segments.",
+      "toolCount": 43
+    },
+    {
+      "id": "conversations",
+      "label": "Conversations",
+      "labelHe": "שיחות",
+      "description": "Conversation history and agent activity.",
+      "toolCount": 2
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp & Meta templates",
+      "labelHe": "תבניות ואטסאפ ומטא",
+      "description": "WhatsApp and Facebook utility message templates.",
+      "toolCount": 8
+    },
+    {
+      "id": "messaging",
+      "label": "Messaging",
+      "labelHe": "שליחה",
+      "description": "Send to one subscriber, or broadcast to many. Handle with care.",
+      "toolCount": 21
+    },
+    {
+      "id": "shop",
+      "label": "Shop",
+      "labelHe": "חנות",
+      "description": "Products, variants, types, vendors, tags, orders, discounts, locations, carts.",
+      "toolCount": 49
+    },
+    {
+      "id": "team",
+      "label": "Team",
+      "labelHe": "צוות",
+      "description": "Ticket lists, team labels and agent groups.",
+      "toolCount": 17
+    },
+    {
+      "id": "ai",
+      "label": "AI",
+      "labelHe": "בינה מלאכותית",
+      "description": "AI agents and tasks, provider settings, OpenAI embeddings.",
+      "toolCount": 13
+    },
+    {
+      "id": "integrations",
+      "label": "Integrations",
+      "labelHe": "אינטגרציות",
+      "description": "Third-party integration credentials and mini-apps.",
+      "toolCount": 30
+    },
+    {
+      "id": "workspace",
+      "label": "Workspace",
+      "labelHe": "סביבת עבודה",
+      "description": "Workspace settings, members, analytics and account info.",
+      "toolCount": 17
+    },
+    {
+      "id": "templates",
+      "label": "Templates",
+      "labelHe": "תבניות",
+      "description": "Flow templates and one-time install links.",
+      "toolCount": 3
+    }
+  ],
+  "tools": [
+    {
+      "name": "cigchat_announcements_read",
+      "toolset": "workspace",
+      "tier": "write",
+      "endpoint": "POST /announcements/read",
+      "description": "Mark announcement as read"
+    },
+    {
+      "name": "cigchat_broadcast_by_segment",
+      "toolset": "messaging",
+      "tier": "broadcast",
+      "endpoint": "POST /subscriber/broadcast-by-segment",
+      "description": "Broadcast sub flow by segments, available types: EMAIL,SMS,WHATSAPP_TEMPLATE,FACEBOOK_NOTIFICATION"
+    },
+    {
+      "name": "cigchat_broadcast_by_tag",
+      "toolset": "messaging",
+      "tier": "broadcast",
+      "endpoint": "POST /subscriber/broadcast-by-tag",
+      "description": "Broadcast sub flow by tags, available types: EMAIL,SMS,WHATSAPP_TEMPLATE,FACEBOOK_NOTIFICATION"
+    },
+    {
+      "name": "cigchat_broadcast_by_user_id",
+      "toolset": "messaging",
+      "tier": "broadcast",
+      "endpoint": "POST /subscriber/broadcast-by-user-id",
+      "description": "Broadcast sub flow by user ids, available types: EMAIL,SMS,WHATSAPP_TEMPLATE,FACEBOOK_NOTIFICATION"
+    },
+    {
+      "name": "cigchat_broadcast_fb_utility_template_by_tag",
+      "toolset": "messaging",
+      "tier": "broadcast",
+      "endpoint": "POST /subscriber/broadcast-facebook-utility-message-template-by-tag",
+      "description": "Broadcast Facebook utility message template by tags"
+    },
+    {
+      "name": "cigchat_broadcast_fb_utility_template_by_user_id",
+      "toolset": "messaging",
+      "tier": "broadcast",
+      "endpoint": "POST /subscriber/broadcast-facebook-utility-message-template-by-user-id",
+      "description": "Broadcast Facebook utility message template by user ids"
+    },
+    {
+      "name": "cigchat_broadcast_to_list",
+      "toolset": "messaging",
+      "tier": "broadcast",
+      "endpoint": "POST /subscriber/broadcast",
+      "description": "Broadcast sub flow by user ns list, available types: EMAIL,SMS,WHATSAPP_TEMPLATE,FACEBOOK_NOTIFICATION"
+    },
+    {
+      "name": "cigchat_broadcast_whatsapp_template_by_tag",
+      "toolset": "messaging",
+      "tier": "broadcast",
+      "endpoint": "POST /subscriber/broadcast-whatsapp-template-by-tag",
+      "description": "Broadcast whatsapp template by tags, you can find the namespace, name, lang, params from /api/whatapp-template/list, use use_default_values or params for wa_template"
+    },
+    {
+      "name": "cigchat_broadcast_whatsapp_template_by_user_id",
+      "toolset": "messaging",
+      "tier": "broadcast",
+      "endpoint": "POST /subscriber/broadcast-whatsapp-template-by-user-id",
+      "description": "Broadcast whatsapp template by user ids, you can find the namespace, name, lang, params from /api/whatapp-template/list, use use_default_values or params for wa_template"
+    },
+    {
+      "name": "cigchat_clear_integration_ainvented",
+      "toolset": "integrations",
+      "tier": "destructive",
+      "endpoint": "DELETE /integration/ainvented",
+      "description": "Clear the config of Ainvented integration"
+    },
+    {
+      "name": "cigchat_clear_integration_calude",
+      "toolset": "integrations",
+      "tier": "destructive",
+      "endpoint": "DELETE /integration/calude",
+      "description": "Clear the config of CaludeAi integration"
+    },
+    {
+      "name": "cigchat_clear_integration_dropi",
+      "toolset": "integrations",
+      "tier": "destructive",
+      "endpoint": "DELETE /integration/dropi",
+      "description": "Clear the config of Dropi integration"
+    },
+    {
+      "name": "cigchat_clear_integration_meta_conversions_api",
+      "toolset": "integrations",
+      "tier": "destructive",
+      "endpoint": "DELETE /integration/meta-conversions-api",
+      "description": "Clear the config of Meta Conversions Api integration"
+    },
+    {
+      "name": "cigchat_clear_integration_openai",
+      "toolset": "integrations",
+      "tier": "destructive",
+      "endpoint": "DELETE /integration/openai",
+      "description": "Clear the config of OpenAi integration"
+    },
+    {
+      "name": "cigchat_clear_integration_s3storage",
+      "toolset": "integrations",
+      "tier": "destructive",
+      "endpoint": "DELETE /integration/s3storage",
+      "description": "Clear the config of S3 Storage integration"
+    },
+    {
+      "name": "cigchat_clear_integration_shopify",
+      "toolset": "integrations",
+      "tier": "destructive",
+      "endpoint": "DELETE /integration/shopify",
+      "description": "Clear the config of shopify integration"
+    },
+    {
+      "name": "cigchat_clear_integration_woocommerce",
+      "toolset": "integrations",
+      "tier": "destructive",
+      "endpoint": "DELETE /integration/woocommerce",
+      "description": "Clear the config of WooCommerce integration"
+    },
+    {
+      "name": "cigchat_clear_integration_xai",
+      "toolset": "integrations",
+      "tier": "destructive",
+      "endpoint": "DELETE /integration/xai",
+      "description": "Clear the config of XAi integration"
+    },
+    {
+      "name": "cigchat_create_product_tag",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "POST /shop/product-tags/create",
+      "description": "Create new tag"
+    },
+    {
+      "name": "cigchat_delete_product_tag",
+      "toolset": "shop",
+      "tier": "destructive",
+      "endpoint": "DELETE /shop/product-tags/{tagId}/delete",
+      "description": "Delete tag"
+    },
+    {
+      "name": "cigchat_facebook_utility_message_template_create",
+      "toolset": "whatsapp",
+      "tier": "write",
+      "endpoint": "POST /facebook-utility-message-template/create",
+      "description": "Create Facebook utility message template"
+    },
+    {
+      "name": "cigchat_facebook_utility_message_template_delete",
+      "toolset": "whatsapp",
+      "tier": "destructive",
+      "endpoint": "DELETE /facebook-utility-message-template/delete",
+      "description": "Delete Facebook utility message template"
+    },
+    {
+      "name": "cigchat_facebook_utility_message_template_list",
+      "toolset": "whatsapp",
+      "tier": "read",
+      "endpoint": "POST /facebook-utility-message-template/list",
+      "description": "List Facebook utility message templates"
+    },
+    {
+      "name": "cigchat_facebook_utility_message_template_sync",
+      "toolset": "whatsapp",
+      "tier": "write",
+      "endpoint": "POST /facebook-utility-message-template/sync",
+      "description": "Sync Facebook utility message templates"
+    },
+    {
+      "name": "cigchat_flow_agent_activity_log_data",
+      "toolset": "conversations",
+      "tier": "read",
+      "endpoint": "GET /flow/agent-activity-log/data",
+      "description": "Get the flow agent activity log data"
+    },
+    {
+      "name": "cigchat_flow_agent_summary",
+      "toolset": "workspace",
+      "tier": "read",
+      "endpoint": "GET /flow-agent-summary",
+      "description": "Get the flow agent summary"
+    },
+    {
+      "name": "cigchat_flow_agents",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/agents",
+      "description": "Get list of agents"
+    },
+    {
+      "name": "cigchat_flow_ai_agent_info",
+      "toolset": "ai",
+      "tier": "read",
+      "endpoint": "POST /flow/ai-agent-info",
+      "description": "View Ai Agent details, including description, prompts, ai function list and more"
+    },
+    {
+      "name": "cigchat_flow_ai_agents",
+      "toolset": "ai",
+      "tier": "read",
+      "endpoint": "GET /flow/ai-agents",
+      "description": "Get list of ai agents by flow"
+    },
+    {
+      "name": "cigchat_flow_ai_task_info",
+      "toolset": "ai",
+      "tier": "read",
+      "endpoint": "POST /flow/ai-task-info",
+      "description": "View Ai Task details"
+    },
+    {
+      "name": "cigchat_flow_ai_tasks",
+      "toolset": "ai",
+      "tier": "read",
+      "endpoint": "GET /flow/ai-tasks",
+      "description": "Get list of ai tasks by flow"
+    },
+    {
+      "name": "cigchat_flow_bot_fields",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/bot-fields",
+      "description": "Get list of bot fields by flow"
+    },
+    {
+      "name": "cigchat_flow_bot_users_count",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/bot-users-count",
+      "description": "Get count of bot users status"
+    },
+    {
+      "name": "cigchat_flow_chat_button_widgets",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/chat-button-widgets",
+      "description": "Get list of chat button widgets"
+    },
+    {
+      "name": "cigchat_flow_conversations_data",
+      "toolset": "conversations",
+      "tier": "read",
+      "endpoint": "GET /flow/conversations/data",
+      "description": "Get the flow conversation data, only return the closed conversations"
+    },
+    {
+      "name": "cigchat_flow_create_bot_field",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "POST /flow/create-bot-field",
+      "description": "create new bot field"
+    },
+    {
+      "name": "cigchat_flow_create_closing_note",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "POST /flow/create-closing-note",
+      "description": "Create a closing note for the current flow"
+    },
+    {
+      "name": "cigchat_flow_create_shortcut",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "POST /flow/create-shortcut",
+      "description": "Create a shortcut for the current flow"
+    },
+    {
+      "name": "cigchat_flow_create_tag",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "POST /flow/create-tag",
+      "description": "create new tag"
+    },
+    {
+      "name": "cigchat_flow_create_user_field",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "POST /flow/create-user-field",
+      "description": "create new user field"
+    },
+    {
+      "name": "cigchat_flow_custom_events_data",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/custom-events/data",
+      "description": "Get the flow custom event data"
+    },
+    {
+      "name": "cigchat_flow_custom_events_summary",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/custom-events/summary",
+      "description": "Get the flow custom event summary"
+    },
+    {
+      "name": "cigchat_flow_delete_bot_field",
+      "toolset": "flow",
+      "tier": "destructive",
+      "endpoint": "DELETE /flow/delete-bot-field",
+      "description": "Delete bot field"
+    },
+    {
+      "name": "cigchat_flow_delete_bot_field_by_name",
+      "toolset": "flow",
+      "tier": "destructive",
+      "endpoint": "DELETE /flow/delete-bot-field-by-name",
+      "description": "Delete bot field by name"
+    },
+    {
+      "name": "cigchat_flow_delete_closing_note",
+      "toolset": "flow",
+      "tier": "destructive",
+      "endpoint": "DELETE /flow/delete-closing-note",
+      "description": "Delete a closing note from the current flow"
+    },
+    {
+      "name": "cigchat_flow_delete_shortcut",
+      "toolset": "flow",
+      "tier": "destructive",
+      "endpoint": "DELETE /flow/delete-shortcut",
+      "description": "Delete a shortcut from the current flow"
+    },
+    {
+      "name": "cigchat_flow_delete_sub_flow",
+      "toolset": "flow",
+      "tier": "destructive",
+      "endpoint": "DELETE /flow/delete-sub-flow",
+      "description": "Delete sub flow"
+    },
+    {
+      "name": "cigchat_flow_delete_tag",
+      "toolset": "flow",
+      "tier": "destructive",
+      "endpoint": "DELETE /flow/delete-tag",
+      "description": "Delete tag"
+    },
+    {
+      "name": "cigchat_flow_delete_tag_by_name",
+      "toolset": "flow",
+      "tier": "destructive",
+      "endpoint": "DELETE /flow/delete-tag-by-name",
+      "description": "Delete tag by tag name"
+    },
+    {
+      "name": "cigchat_flow_delete_user_field",
+      "toolset": "flow",
+      "tier": "destructive",
+      "endpoint": "DELETE /flow/delete-user-field",
+      "description": "Delete user field"
+    },
+    {
+      "name": "cigchat_flow_delete_user_field_by_name",
+      "toolset": "flow",
+      "tier": "destructive",
+      "endpoint": "DELETE /flow/delete-user-field-by-name",
+      "description": "Delete user field by name"
+    },
+    {
+      "name": "cigchat_flow_inbound_webhooks",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/inbound-webhooks",
+      "description": "Get list of inbound webhooks by flow"
+    },
+    {
+      "name": "cigchat_flow_set_bot_field",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "PUT /flow/set-bot-field",
+      "description": "update bot field value"
+    },
+    {
+      "name": "cigchat_flow_set_bot_field_by_name",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "PUT /flow/set-bot-field-by-name",
+      "description": "update bot field value by bot field name"
+    },
+    {
+      "name": "cigchat_flow_set_bot_fields",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "PUT /flow/set-bot-fields",
+      "description": "update multiple bot fields value, up to 20 bot fields"
+    },
+    {
+      "name": "cigchat_flow_set_bot_fields_by_name",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "PUT /flow/set-bot-fields-by-name",
+      "description": "update multiple bot fields value by field name, up to 20 bot fields"
+    },
+    {
+      "name": "cigchat_flow_set_default_start_flow",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "POST /flow/set-default-start-flow",
+      "description": "Set default bot start flow, use main to reset the start flow to main flow"
+    },
+    {
+      "name": "cigchat_flow_set_web_chat_widget_default_start_flow",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "POST /flow/set-web-chat-widget-default-start-flow",
+      "description": "Set default start flow for web chat widget, use main to set the start flow to main flow"
+    },
+    {
+      "name": "cigchat_flow_settings_get_default_ai_provider",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/settings/get-default-ai-provider",
+      "description": "Get default ai provider and model, available ai_provider: openai, deepseek, xai, claude, gemini, groq, ainvented"
+    },
+    {
+      "name": "cigchat_flow_settings_set_audio_transcription",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "POST /flow/settings/set-audio-transcription",
+      "description": "Set audio transcription, available values: none,whisper-1,gpt-4o-transcribe,gpt-4o-mini-transcribe,whisper-large-v3-turbo,gemini-2.5-flash,gemini-3-flash-preview"
+    },
+    {
+      "name": "cigchat_flow_settings_set_default_ai_provider",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "POST /flow/settings/set-default-ai-provider",
+      "description": "Set default ai provider and model, available ai_provider: openai, deepseek, xai, claude, gemini, groq, ainvented"
+    },
+    {
+      "name": "cigchat_flow_summary",
+      "toolset": "workspace",
+      "tier": "read",
+      "endpoint": "GET /flow-summary",
+      "description": "Get the flow summary"
+    },
+    {
+      "name": "cigchat_flow_template_installs",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/template-installs",
+      "description": "Get list of template installs in this flow"
+    },
+    {
+      "name": "cigchat_flow_update_ai_agent_provider",
+      "toolset": "ai",
+      "tier": "write",
+      "endpoint": "POST /flow/update-ai-agent-provider",
+      "description": "update Ai Agent provider and model, available ai_provider: openai, openai-responses, deepseek, xai, xai-responses, claude, gemini, groq, ainvented"
+    },
+    {
+      "name": "cigchat_flow_update_ai_task_provider",
+      "toolset": "ai",
+      "tier": "write",
+      "endpoint": "POST /flow/update-ai-task-provider",
+      "description": "update Ai Task provider and model, available ai_provider: openai, deepseek, xai, claude, gemini, groq, ainvented"
+    },
+    {
+      "name": "cigchat_flow_update_closing_note",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "PUT /flow/update-closing-note",
+      "description": "Update a closing note in the current flow"
+    },
+    {
+      "name": "cigchat_flow_update_shortcut",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "PUT /flow/update-shortcut",
+      "description": "Update a shortcut in the current flow"
+    },
+    {
+      "name": "cigchat_flow_update_user_field",
+      "toolset": "flow",
+      "tier": "write",
+      "endpoint": "POST /flow/update-user-field",
+      "description": "Update user field name or display_type"
+    },
+    {
+      "name": "cigchat_flow_user_fields",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/user-fields",
+      "description": "Get list of user fields by flow"
+    },
+    {
+      "name": "cigchat_get_closing_note",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/closing-notes/{id}",
+      "description": "Get a closing note from the current flow"
+    },
+    {
+      "name": "cigchat_get_integration_ainvented",
+      "toolset": "integrations",
+      "tier": "read",
+      "endpoint": "GET /integration/ainvented",
+      "description": "Get the config of Ainvented integration"
+    },
+    {
+      "name": "cigchat_get_integration_dropi",
+      "toolset": "integrations",
+      "tier": "read",
+      "endpoint": "GET /integration/dropi",
+      "description": "Get the config of Dropi integration"
+    },
+    {
+      "name": "cigchat_get_integration_meta_conversions_api",
+      "toolset": "integrations",
+      "tier": "read",
+      "endpoint": "GET /integration/meta-conversions-api",
+      "description": "Get the config of Meta Conversions Api integration"
+    },
+    {
+      "name": "cigchat_get_integration_openai",
+      "toolset": "integrations",
+      "tier": "read",
+      "endpoint": "GET /integration/openai",
+      "description": "Get the config of OpenAi integration"
+    },
+    {
+      "name": "cigchat_get_integration_s3storage",
+      "toolset": "integrations",
+      "tier": "read",
+      "endpoint": "GET /integration/s3storage",
+      "description": "Get the config of S3 Storage integration"
+    },
+    {
+      "name": "cigchat_get_integration_shopify",
+      "toolset": "integrations",
+      "tier": "read",
+      "endpoint": "GET /integration/shopify",
+      "description": "Get the config of shopify integration"
+    },
+    {
+      "name": "cigchat_get_integration_woocommerce",
+      "toolset": "integrations",
+      "tier": "read",
+      "endpoint": "GET /integration/woocommerce",
+      "description": "Get the config of WooCommerce integration"
+    },
+    {
+      "name": "cigchat_get_integration_xai",
+      "toolset": "integrations",
+      "tier": "read",
+      "endpoint": "GET /integration/xai",
+      "description": "Get the config of XAi integration"
+    },
+    {
+      "name": "cigchat_get_product_tag",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/product-tags/{tagId}/get-info",
+      "description": "Get tag info"
+    },
+    {
+      "name": "cigchat_get_shortcut",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/shortcuts/{id}",
+      "description": "Get a shortcut from the current flow"
+    },
+    {
+      "name": "cigchat_get_subscriber",
+      "toolset": "subscribers",
+      "tier": "read",
+      "endpoint": "GET /subscriber/get-info",
+      "description": "Get subscriber info"
+    },
+    {
+      "name": "cigchat_get_subscriber_by_user_id",
+      "toolset": "subscribers",
+      "tier": "read",
+      "endpoint": "GET /subscriber/get-info-by-user-id",
+      "description": "Get subscriber info by user unique id from channel, e.g. Facebook user id, WhatsApp user id, WeChat user id..."
+    },
+    {
+      "name": "cigchat_installed_mini_app_list",
+      "toolset": "integrations",
+      "tier": "read",
+      "endpoint": "GET /installed-mini-app/list",
+      "description": "Get the list of installed mini apps"
+    },
+    {
+      "name": "cigchat_installed_mini_app_update_api_key",
+      "toolset": "integrations",
+      "tier": "write",
+      "endpoint": "POST /installed-mini-app/update-api-key/{app_id}",
+      "description": "Update the config of Installed mini app, only for the mini app with auth type apikey"
+    },
+    {
+      "name": "cigchat_integration_claude",
+      "toolset": "integrations",
+      "tier": "read",
+      "endpoint": "GET /integration/claude",
+      "description": "Get the config of CaludeAi integration"
+    },
+    {
+      "name": "cigchat_list_closing_notes",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/closing-notes",
+      "description": "Get closing notes for the current flow"
+    },
+    {
+      "name": "cigchat_list_custom_events",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/custom-events",
+      "description": "Get list of custom events by flow"
+    },
+    {
+      "name": "cigchat_list_discount_codes",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/discount-codes",
+      "description": "Get list of discount codes"
+    },
+    {
+      "name": "cigchat_list_orders",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/orders",
+      "description": "Get list of orders"
+    },
+    {
+      "name": "cigchat_list_product_tags",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/product-tags",
+      "description": "Get list of product tags"
+    },
+    {
+      "name": "cigchat_list_product_types",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/product-types",
+      "description": "Get list of product types"
+    },
+    {
+      "name": "cigchat_list_product_vendors",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/product-vendors",
+      "description": "Get list of product vendors"
+    },
+    {
+      "name": "cigchat_list_products",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/products",
+      "description": "Get list of products"
+    },
+    {
+      "name": "cigchat_list_segments",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/segments",
+      "description": "Get list of segments by flow"
+    },
+    {
+      "name": "cigchat_list_shop_locations",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/locations",
+      "description": "Get list of locations"
+    },
+    {
+      "name": "cigchat_list_shortcuts",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/shortcuts",
+      "description": "Get shortcuts for the current flow"
+    },
+    {
+      "name": "cigchat_list_subflows",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/subflows",
+      "description": "Get list of sub flows"
+    },
+    {
+      "name": "cigchat_list_tags",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/tags",
+      "description": "Get list of tags by flow"
+    },
+    {
+      "name": "cigchat_list_templates",
+      "toolset": "templates",
+      "tier": "read",
+      "endpoint": "GET /templates",
+      "description": "Get list of templates"
+    },
+    {
+      "name": "cigchat_me",
+      "toolset": "workspace",
+      "tier": "read",
+      "endpoint": "GET /me",
+      "description": "Get current user info"
+    },
+    {
+      "name": "cigchat_media_library",
+      "toolset": "workspace",
+      "tier": "read",
+      "endpoint": "GET /media-library",
+      "description": "Get member-uploaded media"
+    },
+    {
+      "name": "cigchat_notifications_read",
+      "toolset": "workspace",
+      "tier": "write",
+      "endpoint": "POST /notifications/read",
+      "description": "Mark notification as read"
+    },
+    {
+      "name": "cigchat_notifications_recent",
+      "toolset": "workspace",
+      "tier": "read",
+      "endpoint": "GET /notifications/recent",
+      "description": "Get recent notifications and announcements"
+    },
+    {
+      "name": "cigchat_openai_embeddings",
+      "toolset": "ai",
+      "tier": "read",
+      "endpoint": "GET /openai-embeddings",
+      "description": "Get list of OpenAI Embeddings"
+    },
+    {
+      "name": "cigchat_openai_embeddings_create",
+      "toolset": "ai",
+      "tier": "write",
+      "endpoint": "POST /openai-embeddings/create",
+      "description": "Create new embedding"
+    },
+    {
+      "name": "cigchat_openai_embeddings_delete",
+      "toolset": "ai",
+      "tier": "destructive",
+      "endpoint": "DELETE /openai-embeddings/{id}/delete",
+      "description": "Delete embedding"
+    },
+    {
+      "name": "cigchat_openai_embeddings_generate",
+      "toolset": "ai",
+      "tier": "write",
+      "endpoint": "POST /openai-embeddings/generate",
+      "description": "Regenerate embeddings"
+    },
+    {
+      "name": "cigchat_openai_embeddings_get_info",
+      "toolset": "ai",
+      "tier": "read",
+      "endpoint": "GET /openai-embeddings/{id}/get-info",
+      "description": "Get embedding info"
+    },
+    {
+      "name": "cigchat_openai_embeddings_import",
+      "toolset": "ai",
+      "tier": "write",
+      "endpoint": "POST /openai-embeddings/import",
+      "description": "Import OpenAI Embeddings, maximum 100 embeddings, max characters for each heading is 50, max characters for each text is 1000"
+    },
+    {
+      "name": "cigchat_openai_embeddings_update",
+      "toolset": "ai",
+      "tier": "write",
+      "endpoint": "PUT /openai-embeddings/{id}/update",
+      "description": "Update embeding heading and text."
+    },
+    {
+      "name": "cigchat_search_subscribers",
+      "toolset": "subscribers",
+      "tier": "read",
+      "endpoint": "GET /subscribers",
+      "description": "Get list of subscribers by seaching for name, phone, email, tag, custom user field and so on."
+    },
+    {
+      "name": "cigchat_send_content",
+      "toolset": "messaging",
+      "tier": "send",
+      "endpoint": "POST /subscriber/send-content",
+      "description": "Send content to subscriber, learn more about how to use dynamic content"
+    },
+    {
+      "name": "cigchat_send_email",
+      "toolset": "messaging",
+      "tier": "send",
+      "endpoint": "POST /subscriber/send-email",
+      "description": "Send email content to subscriber"
+    },
+    {
+      "name": "cigchat_send_fb_utility_template",
+      "toolset": "messaging",
+      "tier": "send",
+      "endpoint": "POST /subscriber/send-facebook-utility-message-template",
+      "description": "Send Facebook utility message template to subscriber"
+    },
+    {
+      "name": "cigchat_send_fb_utility_template_by_user_id",
+      "toolset": "messaging",
+      "tier": "send",
+      "endpoint": "POST /subscriber/send-facebook-utility-message-template-by-user-id",
+      "description": "Send Facebook utility message template to subscriber by user id"
+    },
+    {
+      "name": "cigchat_send_main_flow",
+      "toolset": "messaging",
+      "tier": "send",
+      "endpoint": "POST /subscriber/send-main-flow",
+      "description": "Send main flow to subscriber"
+    },
+    {
+      "name": "cigchat_send_node",
+      "toolset": "messaging",
+      "tier": "send",
+      "endpoint": "POST /subscriber/send-node",
+      "description": "Send node to subscriber"
+    },
+    {
+      "name": "cigchat_send_sms",
+      "toolset": "messaging",
+      "tier": "send",
+      "endpoint": "POST /subscriber/send-sms",
+      "description": "Send sms content to subscriber"
+    },
+    {
+      "name": "cigchat_send_subflow",
+      "toolset": "messaging",
+      "tier": "send",
+      "endpoint": "POST /subscriber/send-sub-flow",
+      "description": "Send sub flow to subscriber"
+    },
+    {
+      "name": "cigchat_send_subflow_by_name",
+      "toolset": "messaging",
+      "tier": "send",
+      "endpoint": "POST /subscriber/send-sub-flow-by-flow-name",
+      "description": "Send sub flow to subscriber by flow name"
+    },
+    {
+      "name": "cigchat_send_subflow_by_user_id",
+      "toolset": "messaging",
+      "tier": "send",
+      "endpoint": "POST /subscriber/send-sub-flow-by-user-id",
+      "description": "Send sub flow to subscriber by the unique user id from each channel"
+    },
+    {
+      "name": "cigchat_send_text",
+      "toolset": "messaging",
+      "tier": "send",
+      "endpoint": "POST /subscriber/send-text",
+      "description": "Send text content to subscriber"
+    },
+    {
+      "name": "cigchat_send_whatsapp_template",
+      "toolset": "messaging",
+      "tier": "send",
+      "endpoint": "POST /subscriber/send-whatsapp-template",
+      "description": "Send Whatsapp Template to subscriber, you can find the namespace, name, lang, params from /api/whatapp-template/list"
+    },
+    {
+      "name": "cigchat_send_whatsapp_template_by_user_id",
+      "toolset": "messaging",
+      "tier": "send",
+      "endpoint": "POST /subscriber/send-whatsapp-template-by-user-id",
+      "description": "Send Whatsapp Template to subscriber, you can find the namespace, name, lang, params from /api/whatapp-template/list"
+    },
+    {
+      "name": "cigchat_set_integration_ainvented",
+      "toolset": "integrations",
+      "tier": "write",
+      "endpoint": "POST /integration/ainvented",
+      "description": "Update the config of Ainvented integration"
+    },
+    {
+      "name": "cigchat_set_integration_calude",
+      "toolset": "integrations",
+      "tier": "write",
+      "endpoint": "POST /integration/calude",
+      "description": "Update the config of CaludeAi integration"
+    },
+    {
+      "name": "cigchat_set_integration_dropi",
+      "toolset": "integrations",
+      "tier": "write",
+      "endpoint": "POST /integration/dropi",
+      "description": "Update the config of Dropi integration"
+    },
+    {
+      "name": "cigchat_set_integration_meta_conversions_api",
+      "toolset": "integrations",
+      "tier": "write",
+      "endpoint": "POST /integration/meta-conversions-api",
+      "description": "Update the config of Meta Conversions Api integration"
+    },
+    {
+      "name": "cigchat_set_integration_openai",
+      "toolset": "integrations",
+      "tier": "write",
+      "endpoint": "POST /integration/openai",
+      "description": "Update the config of OpenAi integration"
+    },
+    {
+      "name": "cigchat_set_integration_s3storage",
+      "toolset": "integrations",
+      "tier": "write",
+      "endpoint": "POST /integration/s3storage",
+      "description": "Update the config of S3 Storage integration"
+    },
+    {
+      "name": "cigchat_set_integration_shopify",
+      "toolset": "integrations",
+      "tier": "write",
+      "endpoint": "POST /integration/shopify",
+      "description": "Update the config of shopify integration. For new custom app integration after 2026-02-01, use Client ID value in the api_key field, use Client Secret value in the token field"
+    },
+    {
+      "name": "cigchat_set_integration_woocommerce",
+      "toolset": "integrations",
+      "tier": "write",
+      "endpoint": "POST /integration/woocommerce",
+      "description": "Update the config of WooCommerce integration"
+    },
+    {
+      "name": "cigchat_set_integration_xai",
+      "toolset": "integrations",
+      "tier": "write",
+      "endpoint": "POST /integration/xai",
+      "description": "Update the config of XAi integration"
+    },
+    {
+      "name": "cigchat_shop_business_hours_info",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/business-hours/info",
+      "description": "Get store business hours"
+    },
+    {
+      "name": "cigchat_shop_business_hours_update",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "PUT /shop/business-hours/update",
+      "description": "Update store business hours. id, available values: 1, 2, 3, 4, 5, 6, 7 name, available values: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday option, available values: open, close, open_1, open_2 start, required if option is open_1 or open_2, available values: between 00:00 and 23:45, stepping by 00:15 end, required if option is open_1 or open_2, available values: between 00:00 and 24:00, stepping by 00:15 start_2, required if option is open_2, available values: between 00:00 and 23:45, stepping by 00:15 end_2, required if option is open_2, available values: between 00:00 and 24:00, stepping by 00:15"
+    },
+    {
+      "name": "cigchat_shop_discount_codes_create",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "POST /shop/discount-codes/create",
+      "description": "Create new tag"
+    },
+    {
+      "name": "cigchat_shop_discount_codes_delete",
+      "toolset": "shop",
+      "tier": "destructive",
+      "endpoint": "DELETE /shop/discount-codes/{codeId}/delete",
+      "description": "Delete discount code"
+    },
+    {
+      "name": "cigchat_shop_discount_codes_delete_by_code",
+      "toolset": "shop",
+      "tier": "destructive",
+      "endpoint": "DELETE /shop/discount-codes/delete-by-code",
+      "description": "Delete discount code by code"
+    },
+    {
+      "name": "cigchat_shop_discount_codes_get_info",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/discount-codes/{codeId}/get-info",
+      "description": "Get discount code info"
+    },
+    {
+      "name": "cigchat_shop_discount_codes_get_info_by_code",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/discount-codes/get-info-by-code",
+      "description": "Get discount code info by code"
+    },
+    {
+      "name": "cigchat_shop_discount_codes_update",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "PUT /shop/discount-codes/{codeId}/update",
+      "description": "Update discount code."
+    },
+    {
+      "name": "cigchat_shop_locations_create",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "POST /shop/locations/create",
+      "description": "Create new location"
+    },
+    {
+      "name": "cigchat_shop_locations_delete",
+      "toolset": "shop",
+      "tier": "destructive",
+      "endpoint": "DELETE /shop/locations/{locationId}/delete",
+      "description": "Delete location"
+    },
+    {
+      "name": "cigchat_shop_locations_get_info",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/locations/{locationId}/get-info",
+      "description": "Get lcoation info"
+    },
+    {
+      "name": "cigchat_shop_locations_update",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "PUT /shop/locations/{locationId}/update",
+      "description": "Update location."
+    },
+    {
+      "name": "cigchat_shop_orders_create",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "POST /shop/orders/create",
+      "description": "Create new order for bot user"
+    },
+    {
+      "name": "cigchat_shop_orders_get_info",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/orders/{orderId}/get-info",
+      "description": "Get order info"
+    },
+    {
+      "name": "cigchat_shop_orders_update",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "PUT /shop/orders/{orderId}/update",
+      "description": "Update order"
+    },
+    {
+      "name": "cigchat_shop_product_types_create",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "POST /shop/product-types/create",
+      "description": "Create new type"
+    },
+    {
+      "name": "cigchat_shop_product_types_delete",
+      "toolset": "shop",
+      "tier": "destructive",
+      "endpoint": "DELETE /shop/product-types/{typeId}/delete",
+      "description": "Delete type"
+    },
+    {
+      "name": "cigchat_shop_product_types_get_info",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/product-types/{typeId}/get-info",
+      "description": "Get type info"
+    },
+    {
+      "name": "cigchat_shop_product_types_update",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "PUT /shop/product-types/{typeId}/update",
+      "description": "Update type name."
+    },
+    {
+      "name": "cigchat_shop_product_vendors_create",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "POST /shop/product-vendors/create",
+      "description": "Create new vendor"
+    },
+    {
+      "name": "cigchat_shop_product_vendors_delete",
+      "toolset": "shop",
+      "tier": "destructive",
+      "endpoint": "DELETE /shop/product-vendors/{vendorId}/delete",
+      "description": "Delete vendor"
+    },
+    {
+      "name": "cigchat_shop_product_vendors_get_info",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/product-vendors/{vendorId}/get-info",
+      "description": "Get vendor info"
+    },
+    {
+      "name": "cigchat_shop_product_vendors_update",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "PUT /shop/product-vendors/{vendorId}/update",
+      "description": "Update vendor name."
+    },
+    {
+      "name": "cigchat_shop_products_create",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "POST /shop/products/create",
+      "description": "Create new product"
+    },
+    {
+      "name": "cigchat_shop_products_delete",
+      "toolset": "shop",
+      "tier": "destructive",
+      "endpoint": "DELETE /shop/products/{productId}/delete",
+      "description": "Delete product"
+    },
+    {
+      "name": "cigchat_shop_products_get_info",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/products/{productId}/get-info",
+      "description": "Get product info"
+    },
+    {
+      "name": "cigchat_shop_products_update",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "PUT /shop/products/{productId}/update",
+      "description": "Update product info only. To update variants, use /shop/products/update-variant"
+    },
+    {
+      "name": "cigchat_shop_products_variants",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/products/{productId}/variants",
+      "description": "Get list of product variants"
+    },
+    {
+      "name": "cigchat_shop_products_variants_create",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "POST /shop/products/{productId}/variants/create",
+      "description": "Create new product variant"
+    },
+    {
+      "name": "cigchat_shop_products_variants_delete",
+      "toolset": "shop",
+      "tier": "destructive",
+      "endpoint": "DELETE /shop/products/{productId}/variants/{variantId}/delete",
+      "description": "Delete product variant"
+    },
+    {
+      "name": "cigchat_shop_products_variants_get_info",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /shop/products/{productId}/variants/{variantId}/get-info",
+      "description": "Get product variant info"
+    },
+    {
+      "name": "cigchat_shop_products_variants_update",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "PUT /shop/products/{productId}/variants/{variantId}/update",
+      "description": "Update product variant info"
+    },
+    {
+      "name": "cigchat_subscriber_add_labels_by_name",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/add-labels-by-name",
+      "description": "Add labels by label name to subscriber, up to 20 labels"
+    },
+    {
+      "name": "cigchat_subscriber_add_tag",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/add-tag",
+      "description": "Add tag to subscriber"
+    },
+    {
+      "name": "cigchat_subscriber_add_tag_by_name",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/add-tag-by-name",
+      "description": "Add tag to subscriber by tag name"
+    },
+    {
+      "name": "cigchat_subscriber_add_tags",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/add-tags",
+      "description": "Add tags to subscriber, up to 20 tags"
+    },
+    {
+      "name": "cigchat_subscriber_add_tags_by_name",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/add-tags-by-name",
+      "description": "Add tags by tag name to subscriber, up to 20 tags"
+    },
+    {
+      "name": "cigchat_subscriber_add_to_cart",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "POST /subscriber/add-to-cart",
+      "description": "Add item to subscriber shopping cart"
+    },
+    {
+      "name": "cigchat_subscriber_app_trigger",
+      "toolset": "integrations",
+      "tier": "send",
+      "endpoint": "POST /subscriber/app-trigger",
+      "description": "Trigger an app event on subscriber from installed min-app"
+    },
+    {
+      "name": "cigchat_subscriber_assign_agent",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/assign-agent",
+      "description": "Assign agent to chat"
+    },
+    {
+      "name": "cigchat_subscriber_assign_agent_group",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/assign-agent-group",
+      "description": "Assign agent group to chat"
+    },
+    {
+      "name": "cigchat_subscriber_cart",
+      "toolset": "shop",
+      "tier": "read",
+      "endpoint": "GET /subscriber/cart",
+      "description": "Get subscriber shopping cart detail"
+    },
+    {
+      "name": "cigchat_subscriber_cart_paid",
+      "toolset": "shop",
+      "tier": "send",
+      "endpoint": "POST /subscriber/cart-paid",
+      "description": "Checkout subscriber shopping cart and mark as paid"
+    },
+    {
+      "name": "cigchat_subscriber_chat_messages",
+      "toolset": "subscribers",
+      "tier": "read",
+      "endpoint": "GET /subscriber/chat-messages",
+      "description": "Get list of subscriber chat messages. type: in -> Incoming message from bot user, out -> Ougoing message from bot, agent -> Outgoing message from human agent, note -> Private note, system -> system messages"
+    },
+    {
+      "name": "cigchat_subscriber_chat_messages_by_mids",
+      "toolset": "subscribers",
+      "tier": "read",
+      "endpoint": "POST /subscriber/chat-messages-by-mids",
+      "description": "Get chat messages by multiple mids, up to 100 mids. type: in -> Incoming message from bot user, out -> Ougoing message from bot, agent -> Outgoing message from human agent"
+    },
+    {
+      "name": "cigchat_subscriber_clear_user_field",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "DELETE /subscriber/clear-user-field",
+      "description": "Clear subscriber user field value"
+    },
+    {
+      "name": "cigchat_subscriber_clear_user_field_by_name",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "DELETE /subscriber/clear-user-field-by-name",
+      "description": "Clear subscriber user field value by field name"
+    },
+    {
+      "name": "cigchat_subscriber_clear_user_fields",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "DELETE /subscriber/clear-user-fields",
+      "description": "Clear multiple subscriber user fields, up to 20 user fields"
+    },
+    {
+      "name": "cigchat_subscriber_clear_user_fields_by_name",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "DELETE /subscriber/clear-user-fields-by-name",
+      "description": "Clear multiple subscriber user fields, up to 20 user fields"
+    },
+    {
+      "name": "cigchat_subscriber_create",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/create",
+      "description": "Create new subscriber, phone or email is required"
+    },
+    {
+      "name": "cigchat_subscriber_create_many",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/create-many",
+      "description": "Create new subscribers, phone or email is required"
+    },
+    {
+      "name": "cigchat_subscriber_delete",
+      "toolset": "subscribers",
+      "tier": "destructive",
+      "endpoint": "DELETE /subscriber/delete",
+      "description": "Delete subscriber"
+    },
+    {
+      "name": "cigchat_subscriber_empty_cart",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "DELETE /subscriber/empty-cart",
+      "description": "Empty subscriber shopping cart items"
+    },
+    {
+      "name": "cigchat_subscriber_log_custom_event",
+      "toolset": "subscribers",
+      "tier": "send",
+      "endpoint": "POST /subscriber/log-custom-event",
+      "description": "Log custom event"
+    },
+    {
+      "name": "cigchat_subscriber_move_chat_to",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/move-chat-to",
+      "description": "Update chat status"
+    },
+    {
+      "name": "cigchat_subscriber_opt_in_email",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/opt-in-email",
+      "description": "Opt-in Email"
+    },
+    {
+      "name": "cigchat_subscriber_opt_in_sms",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/opt-in-sms",
+      "description": "Opt-in SMS"
+    },
+    {
+      "name": "cigchat_subscriber_opt_out_email",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "DELETE /subscriber/opt-out-email",
+      "description": "Opt-out Email"
+    },
+    {
+      "name": "cigchat_subscriber_opt_out_sms",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "DELETE /subscriber/opt-out-sms",
+      "description": "Opt-out SMS"
+    },
+    {
+      "name": "cigchat_subscriber_pause_bot",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/pause-bot",
+      "description": "Pause bot automation to subscriber"
+    },
+    {
+      "name": "cigchat_subscriber_remove_from_cart",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "DELETE /subscriber/remove-from-cart",
+      "description": "Remove item from subscriber shopping cart"
+    },
+    {
+      "name": "cigchat_subscriber_remove_labels_by_name",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "DELETE /subscriber/remove-labels-by-name",
+      "description": "Remove labels from subscriber by label name, up to 20 labels"
+    },
+    {
+      "name": "cigchat_subscriber_remove_tag",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "DELETE /subscriber/remove-tag",
+      "description": "Remove tag from subscriber"
+    },
+    {
+      "name": "cigchat_subscriber_remove_tag_by_name",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "DELETE /subscriber/remove-tag-by-name",
+      "description": "Remove tag from subscriber by tag name"
+    },
+    {
+      "name": "cigchat_subscriber_remove_tags",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "DELETE /subscriber/remove-tags",
+      "description": "Remove tags from subscriber, up to 20 tags"
+    },
+    {
+      "name": "cigchat_subscriber_remove_tags_by_name",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "DELETE /subscriber/remove-tags-by-name",
+      "description": "Remove tags from subscriber by tag name, up to 20 tags"
+    },
+    {
+      "name": "cigchat_subscriber_resume_bot",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/resume-bot",
+      "description": "Resume bot automation to subscriber"
+    },
+    {
+      "name": "cigchat_subscriber_set_user_field",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "PUT /subscriber/set-user-field",
+      "description": "Set or update subscriber user field value"
+    },
+    {
+      "name": "cigchat_subscriber_set_user_field_by_name",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "PUT /subscriber/set-user-field-by-name",
+      "description": "Set or update subscriber user field value by field name"
+    },
+    {
+      "name": "cigchat_subscriber_set_user_fields",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "PUT /subscriber/set-user-fields",
+      "description": "Set or update subscriber multiple user field value, up to 20 user fields"
+    },
+    {
+      "name": "cigchat_subscriber_set_user_fields_by_name",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "PUT /subscriber/set-user-fields-by-name",
+      "description": "Set or update subscriber multiple user field value, up to 20 user fields"
+    },
+    {
+      "name": "cigchat_subscriber_subscribe_to_bot",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/subscribe-to-bot",
+      "description": "Subscribe to bot"
+    },
+    {
+      "name": "cigchat_subscriber_unassign_agent",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "POST /subscriber/unassign-agent",
+      "description": "Unassign agent from chat"
+    },
+    {
+      "name": "cigchat_subscriber_unsubscribe_from_bot",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "DELETE /subscriber/unsubscribe-from-bot",
+      "description": "Unsubscribe from bot"
+    },
+    {
+      "name": "cigchat_subscriber_update",
+      "toolset": "subscribers",
+      "tier": "write",
+      "endpoint": "PUT /subscriber/update",
+      "description": "Update subscriber data"
+    },
+    {
+      "name": "cigchat_subscriber_update_order_status",
+      "toolset": "shop",
+      "tier": "send",
+      "endpoint": "POST /subscriber/update-order-status",
+      "description": "Update order status to paid,ordered,processing,shipped,completed,cancelled,refunded"
+    },
+    {
+      "name": "cigchat_team_agent_group",
+      "toolset": "team",
+      "tier": "read",
+      "endpoint": "GET /team/agent-group/{id}",
+      "description": "Get agent group information and members"
+    },
+    {
+      "name": "cigchat_team_agent_groups",
+      "toolset": "team",
+      "tier": "read",
+      "endpoint": "GET /team/agent-groups",
+      "description": "Get list of Agent Groups"
+    },
+    {
+      "name": "cigchat_team_bot_users",
+      "toolset": "workspace",
+      "tier": "read",
+      "endpoint": "GET /team-bot-users",
+      "description": "Get list of bot users by seaching for name, phone, email and so on."
+    },
+    {
+      "name": "cigchat_team_create_agent_group",
+      "toolset": "team",
+      "tier": "write",
+      "endpoint": "POST /team/create-agent-group",
+      "description": "create new agent group"
+    },
+    {
+      "name": "cigchat_team_create_label",
+      "toolset": "team",
+      "tier": "write",
+      "endpoint": "POST /team/create-label",
+      "description": "create new label"
+    },
+    {
+      "name": "cigchat_team_delete_agent_group",
+      "toolset": "team",
+      "tier": "destructive",
+      "endpoint": "DELETE /team/delete-agent-group/{id}",
+      "description": "Delete agent group"
+    },
+    {
+      "name": "cigchat_team_delete_label",
+      "toolset": "team",
+      "tier": "destructive",
+      "endpoint": "DELETE /team/delete-label",
+      "description": "Delete label"
+    },
+    {
+      "name": "cigchat_team_delete_label_by_name",
+      "toolset": "team",
+      "tier": "destructive",
+      "endpoint": "DELETE /team/delete-label-by-name",
+      "description": "Delete label by label name"
+    },
+    {
+      "name": "cigchat_team_flows",
+      "toolset": "workspace",
+      "tier": "read",
+      "endpoint": "GET /team-flows",
+      "description": "Get list of workspace bots"
+    },
+    {
+      "name": "cigchat_team_info",
+      "toolset": "workspace",
+      "tier": "read",
+      "endpoint": "GET /team-info",
+      "description": "Get workspace info"
+    },
+    {
+      "name": "cigchat_team_labels",
+      "toolset": "team",
+      "tier": "read",
+      "endpoint": "GET /team/labels",
+      "description": "Get list of labels"
+    },
+    {
+      "name": "cigchat_team_members",
+      "toolset": "workspace",
+      "tier": "read",
+      "endpoint": "GET /team-members",
+      "description": "Get list of workspace members"
+    },
+    {
+      "name": "cigchat_team_ticket_lists",
+      "toolset": "team",
+      "tier": "read",
+      "endpoint": "GET /team/ticket-lists",
+      "description": "Get list of ticket lists"
+    },
+    {
+      "name": "cigchat_team_ticket_lists_create",
+      "toolset": "team",
+      "tier": "write",
+      "endpoint": "POST /team/ticket-lists/{listId}/create",
+      "description": "create new ticket"
+    },
+    {
+      "name": "cigchat_team_ticket_lists_delete",
+      "toolset": "team",
+      "tier": "destructive",
+      "endpoint": "DELETE /team/ticket-lists/{listId}/delete/{listItemId}",
+      "description": "delete a ticket"
+    },
+    {
+      "name": "cigchat_team_ticket_lists_fields",
+      "toolset": "team",
+      "tier": "read",
+      "endpoint": "GET /team/ticket-lists/{listId}/fields",
+      "description": "Get list of ticket list fields"
+    },
+    {
+      "name": "cigchat_team_ticket_lists_items",
+      "toolset": "team",
+      "tier": "read",
+      "endpoint": "GET /team/ticket-lists/{listId}/items",
+      "description": "Get list of ticket list items"
+    },
+    {
+      "name": "cigchat_team_ticket_lists_log_data",
+      "toolset": "team",
+      "tier": "read",
+      "endpoint": "GET /team/ticket-lists/{listId}/log-data",
+      "description": "Get the ticket list change log data"
+    },
+    {
+      "name": "cigchat_team_ticket_lists_update",
+      "toolset": "team",
+      "tier": "write",
+      "endpoint": "PUT /team/ticket-lists/{listId}/update/{listItemId}",
+      "description": "update a ticket, include only the fields that need to be changed"
+    },
+    {
+      "name": "cigchat_team_update_agent_group",
+      "toolset": "team",
+      "tier": "write",
+      "endpoint": "PUT /team/update-agent-group/{id}",
+      "description": "update agent group"
+    },
+    {
+      "name": "cigchat_team_update_agent_group_users",
+      "toolset": "team",
+      "tier": "write",
+      "endpoint": "POST /team/update-agent-group-users/{id}",
+      "description": "update agent group members"
+    },
+    {
+      "name": "cigchat_template_generate_one_time_link",
+      "toolset": "templates",
+      "tier": "write",
+      "endpoint": "POST /template/{templateNs}/generate-one-time-link",
+      "description": "Generate template one time install link"
+    },
+    {
+      "name": "cigchat_template_installs",
+      "toolset": "templates",
+      "tier": "read",
+      "endpoint": "GET /template/{templateNs}/installs",
+      "description": "Get list of installs by template ns"
+    },
+    {
+      "name": "cigchat_update_product_tag",
+      "toolset": "shop",
+      "tier": "write",
+      "endpoint": "PUT /shop/product-tags/{tagId}/update",
+      "description": "Update tag name."
+    },
+    {
+      "name": "cigchat_user_change_password",
+      "toolset": "workspace",
+      "tier": "write",
+      "endpoint": "PUT /user/change-password",
+      "description": "Change user password"
+    },
+    {
+      "name": "cigchat_wa_call_logs",
+      "toolset": "workspace",
+      "tier": "read",
+      "endpoint": "GET /wa-call-logs",
+      "description": "Get paginated WhatsApp call logs for the workspace"
+    },
+    {
+      "name": "cigchat_whatsapp_template_create",
+      "toolset": "whatsapp",
+      "tier": "write",
+      "endpoint": "POST /whatsapp-template/create",
+      "description": "Create Whatsapp template, check https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/message_templates/#Creating"
+    },
+    {
+      "name": "cigchat_whatsapp_template_delete",
+      "toolset": "whatsapp",
+      "tier": "destructive",
+      "endpoint": "DELETE /whatsapp-template/delete",
+      "description": "Delete Whatsapp template"
+    },
+    {
+      "name": "cigchat_whatsapp_template_list",
+      "toolset": "whatsapp",
+      "tier": "read",
+      "endpoint": "POST /whatsapp-template/list",
+      "description": "List Whatsapp templates"
+    },
+    {
+      "name": "cigchat_whatsapp_template_sync",
+      "toolset": "whatsapp",
+      "tier": "write",
+      "endpoint": "POST /whatsapp-template/sync",
+      "description": "Sync Whatsapp templates"
+    },
+    {
+      "name": "cigchat_workspace_settings_channels",
+      "toolset": "workspace",
+      "tier": "read",
+      "endpoint": "GET /workspace-settings/channels",
+      "description": "Get workspace settings - Channels"
+    },
+    {
+      "name": "cigchat_workspace_settings_live_chat_sidebar",
+      "toolset": "workspace",
+      "tier": "read",
+      "endpoint": "GET /workspace-settings/live-chat-sidebar",
+      "description": "Get workspace settings - Live Chat Sidebar"
+    },
+    {
+      "name": "cigchat_workspace_settings_update_channels",
+      "toolset": "workspace",
+      "tier": "write",
+      "endpoint": "POST /workspace-settings/update-channels",
+      "description": "Show/Hide workspace Channels"
+    },
+    {
+      "name": "cigchat_workspace_settings_update_live_chat_sidebar",
+      "toolset": "workspace",
+      "tier": "write",
+      "endpoint": "POST /workspace-settings/update-live-chat-sidebar",
+      "description": "Update the workspace settings for live chat sidebar, available values: single_bot_style,disable_sidebar,hide_unanswered,hide_my_groups,hide_collaborating,hide_supervised,hide_unassigned,hide_agents,hide_agent_groups,hide_status,hide_spam,hide_invalid,hide_unread,hide_unsubscribed,hide_segments,hide_channels,hide_channel_facebook,hide_channel_instagram,hide_channel_whatsapp,hide_channel_whatsapp_cloud,hide_channel_telegram,hide_channel_tiktok,hide_channel_apple,hide_channel_google,hide_channel_line,hide_channel_viber,hide_channel_vk,hide_channel_wechat,hide_channel_web,hide_channel_sso-google,hide_channel_sso-facebook,hide_channel_sso-email,show_labels,show_boards,show_lead_status,show_department"
+    }
+  ]
+}
