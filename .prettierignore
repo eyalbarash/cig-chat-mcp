@@ -1,0 +1,10 @@
+dist/
+node_modules/
+coverage/
+spec/openapi.json
+spec/openapi.raw.json
+src/generated/
+docs/TOOLS.md
+docs/tools.json
+pnpm-lock.yaml
+package-lock.json

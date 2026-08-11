@@ -1,0 +1,17 @@
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Never commit credentials. This server takes the customer's own cig.chat bot
+# token at runtime via CIGCHAT_API_TOKEN — nothing is stored in the repo.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.tokens
+
+.DS_Store
+coverage/
+.vitest/
+spec/openapi.raw.json
