@@ -2,6 +2,8 @@
  * Command-line entry point. Published as the `cigchat-mcp` bin, so `npx @cig-chat/mcp` runs it.
  */
 
+import { realpathSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { buildServer, SERVER_VERSION } from './server.js';
 import { loadConfig, tokenHint } from './config.js';
@@ -99,8 +101,19 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
   await server.connect(new StdioServerTransport());
 }
 
-// Only auto-run when executed directly, so tests can import `main`.
-if (process.argv[1] && import.meta.url === `file://${process.argv[1]}`) {
+// Only auto-run when executed directly, so tests can import `main`. npm bins are
+// symlinks (node_modules/.bin/cigchat-mcp), so compare realpaths — argv[1] is the
+// link while import.meta.url is already resolved.
+function isDirectInvocation(): boolean {
+  if (!process.argv[1]) return false;
+  try {
+    return realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));
+  } catch {
+    return false;
+  }
+}
+
+if (isDirectInvocation()) {
   main().catch((err: unknown) => {
     process.stderr.write(`[cigchat-mcp] ${err instanceof Error ? err.message : String(err)}\n`);
     process.exit(1);

@@ -4,7 +4,8 @@
  */
 
 import { execSync } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { existsSync, mkdtempSync, rmSync, symlinkSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
@@ -22,6 +23,20 @@ const run = (args: string, opts: { env?: Record<string, string> } = {}): string 
 describe.skipIf(!existsSync(CLI))('cli', () => {
   it('prints its version', () => {
     expect(run('--version').trim()).toMatch(/^\d+\.\d+\.\d+$/);
+  });
+
+  it('runs through a node_modules/.bin-style symlink, the way npx invokes it', () => {
+    // npm bins are symlinks: argv[1] is the link path while import.meta.url is the
+    // realpath, so a naive string-compare entry guard silently never calls main().
+    const dir = mkdtempSync(join(tmpdir(), 'cigchat-bin-'));
+    const link = join(dir, 'cigchat-mcp');
+    symlinkSync(CLI, link);
+    try {
+      const out = execSync(`node ${JSON.stringify(link)} --version`, { encoding: 'utf8' });
+      expect(out.trim()).toMatch(/^\d+\.\d+\.\d+$/);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 
   it('documents the token requirement in --help', () => {
