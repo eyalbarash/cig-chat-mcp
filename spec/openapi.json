@@ -1350,6 +1350,42 @@
           "name": "DiscountResource"
         }
       },
+      "ErrorLogData": {
+        "description": "Flow error log data model",
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created at",
+            "type": "string"
+          },
+          "description": {
+            "title": "Error description",
+            "type": "string"
+          },
+          "flow_ns": {
+            "title": "Flow namespace",
+            "type": "string"
+          },
+          "id": {
+            "format": "int64",
+            "title": "Error log ID",
+            "type": "integer"
+          },
+          "node_ns": {
+            "title": "Node namespace",
+            "type": "string"
+          },
+          "user_ns": {
+            "title": "Subscriber namespace",
+            "type": "string"
+          }
+        },
+        "title": "Flow Error Log Data",
+        "type": "object",
+        "xml": {
+          "name": "ErrorLogData"
+        }
+      },
       "FacebookUtilityMessageTemplate": {
         "description": "Facebook utility message template model",
         "properties": {
@@ -5462,6 +5498,105 @@
         ]
       }
     },
+    "/flow/error-logs/data": {
+      "get": {
+        "description": "<code>Scope required: (Manage Flow)</code><br><br>Get error logs for the current flow.",
+        "operationId": "flowErrorLogData",
+        "parameters": [
+          {
+            "description": "Node namespace",
+            "in": "query",
+            "name": "node_ns",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Subscriber user namespace",
+            "in": "query",
+            "name": "user_ns",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Partial error description",
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Unix timestamp no older than one month",
+            "in": "query",
+            "name": "start_time",
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Unix timestamp no older than one month",
+            "in": "query",
+            "name": "end_time",
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of items, between 1 and 1000",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Page number, between 1 and 100",
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "$ref": "#/components/schemas/ErrorLogData"
+                      },
+                      "type": "array"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
+                  },
+                  "title": "Response Body",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "422": {
+            "description": "Validation error"
+          }
+        },
+        "tags": [
+          "Flow"
+        ]
+      }
+    },
     "/flow/inbound-webhooks": {
       "get": {
         "description": "<code>Scope required: (Manage Flow)</code><br><br>Get list of inbound webhooks by flow",
@@ -8530,7 +8665,7 @@
             }
           },
           {
-            "description": "Workspace member ID. When omitted, media uploaded by any member is returned.",
+            "description": "Workspace member ID. When omitted, media uploaded by any member is returned. When the value is 0, it will return media uploaded from bot or bot users",
             "in": "query",
             "name": "user_id",
             "required": false,
@@ -12787,7 +12922,7 @@
         },
         "summary": "",
         "tags": [
-          "Sending"
+          "Broadcast"
         ]
       }
     },
@@ -12880,7 +13015,7 @@
         },
         "summary": "",
         "tags": [
-          "Sending"
+          "Broadcast"
         ]
       }
     },
@@ -12990,7 +13125,7 @@
         },
         "summary": "",
         "tags": [
-          "Sending"
+          "Broadcast"
         ]
       }
     },
@@ -13062,7 +13197,7 @@
         },
         "summary": "",
         "tags": [
-          "Sending"
+          "Broadcast"
         ]
       }
     },
@@ -13182,7 +13317,7 @@
         },
         "summary": "",
         "tags": [
-          "Sending"
+          "Broadcast"
         ]
       }
     },
@@ -13291,7 +13426,7 @@
         },
         "summary": "",
         "tags": [
-          "Sending"
+          "Broadcast"
         ]
       }
     },
@@ -13423,7 +13558,7 @@
         },
         "summary": "",
         "tags": [
-          "Sending"
+          "Broadcast"
         ]
       }
     },
@@ -13544,7 +13679,120 @@
         },
         "summary": "",
         "tags": [
-          "Sending"
+          "Broadcast"
+        ]
+      }
+    },
+    "/subscriber/broadcast/cancel": {
+      "delete": {
+        "description": "<code>Scope required: (Send Message)</code><br><br>Cancel all pending recipients of a new, scheduled, or sending broadcast in the current flow.",
+        "operationId": "flowBotUserCancelBroadcast",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "broadcast_ns",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseOk"
+                }
+              }
+            },
+            "description": "Successful operation"
+          }
+        },
+        "tags": [
+          "Broadcast"
+        ]
+      }
+    },
+    "/subscriber/broadcast/delete": {
+      "delete": {
+        "description": "<code>Scope required: (Send Message)</code><br><br>Delete a cancelled broadcast and its recipient records from the current flow.",
+        "operationId": "flowBotUserDeleteBroadcast",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "broadcast_ns",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseOk"
+                }
+              }
+            },
+            "description": "Successful operation"
+          }
+        },
+        "tags": [
+          "Broadcast"
+        ]
+      }
+    },
+    "/subscriber/broadcasts": {
+      "get": {
+        "description": "<code>Scope required: (Send Message)</code><br><br>Get broadcasts in the current flow. Filter by the stored broadcast status when required.",
+        "operationId": "flowBotUserBroadcasts",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "maximum": 500,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "New, Scheduled, Completed, or Cancelled",
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "enum": [
+                "New",
+                "Scheduled",
+                "Completed",
+                "Cancelled"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "tags": [
+          "Broadcast"
         ]
       }
     },
@@ -18210,6 +18458,183 @@
         ]
       }
     },
+    "/team/ticket-lists/{listId}/items/{listItemId}/comments": {
+      "get": {
+        "description": "<code>Scope required: (Manage Team)</code><br><br>Get comments and attachment URLs for a ticket",
+        "operationId": "teamTicketListItemComments",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "listId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "listItemId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of comments in the response, between 1 and 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Page number",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "properties": {
+                          "agent_id": {
+                            "example": 12,
+                            "type": "integer"
+                          },
+                          "content": {
+                            "example": "The issue has been investigated.",
+                            "type": "string"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "file": {
+                            "description": "Attachment URL",
+                            "example": "https://files.example.com/invoice.pdf",
+                            "type": "string"
+                          },
+                          "id": {
+                            "example": 123,
+                            "type": "integer"
+                          },
+                          "list_id": {
+                            "example": 10,
+                            "type": "integer"
+                          },
+                          "list_item_id": {
+                            "example": 456,
+                            "type": "integer"
+                          },
+                          "updated_at": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Ticket list or ticket not found"
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Ticket List"
+        ]
+      },
+      "post": {
+        "description": "<code>Scope required: (Manage Team)</code><br><br>Add a comment and optional attachment URL to a ticket",
+        "operationId": "teamCreateTicketListItemComment",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "listId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "listItemId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "content": {
+                    "example": "The issue has been investigated.",
+                    "maxLength": 2000,
+                    "type": "string"
+                  },
+                  "file": {
+                    "description": "HTTPS attachment URL",
+                    "example": "https://files.example.com/invoice.pdf",
+                    "maxLength": 500,
+                    "nullable": true,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "content"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Comment created"
+          },
+          "404": {
+            "description": "Ticket list or ticket not found"
+          },
+          "422": {
+            "description": "Invalid comment data"
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Ticket List"
+        ]
+      }
+    },
     "/team/ticket-lists/{listId}/log-data": {
       "get": {
         "description": "<code>Scope required: (Manage Team)</code><br><br>Get the ticket list change log data",
@@ -19818,6 +20243,10 @@
     {
       "description": "",
       "name": "Sending"
+    },
+    {
+      "description": "",
+      "name": "Broadcast"
     },
     {
       "description": "",

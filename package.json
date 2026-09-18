@@ -1,6 +1,6 @@
 {
   "name": "@cig-chat/mcp",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "MCP server for the cig.chat API — drive subscribers, flows, broadcasts, WhatsApp templates and the shop from any MCP client.",
   "keywords": [
     "mcp",

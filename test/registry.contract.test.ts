@@ -110,7 +110,17 @@ describe('toolset and tier filtering', () => {
 
 describe('generated operation table', () => {
   it('covers the whole documented API surface', () => {
-    expect(OPERATIONS.length).toBe(243);
+    expect(OPERATIONS.length).toBe(249);
+  });
+
+  it('gates broadcast cancel and delete behind the confirmation step', () => {
+    const tierOf = (name: string): string | undefined =>
+      OPERATIONS.find((o) => o.name === name)?.tier;
+    expect(tierOf('cigchat_cancel_broadcast')).toBe('destructive');
+    expect(tierOf('cigchat_delete_broadcast')).toBe('destructive');
+    expect(tierOf('cigchat_list_broadcasts')).toBe('read');
+    expect(tierOf('cigchat_team_ticket_item_comments')).toBe('read');
+    expect(tierOf('cigchat_team_ticket_item_add_comment')).toBe('write');
   });
 
   it('can size the audience of every tag- or segment-targeted broadcast', () => {

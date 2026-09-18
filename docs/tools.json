@@ -1,16 +1,16 @@
 {
   "package": "@cig-chat/mcp",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "counts": {
-    "tools": 243,
+    "tools": 249,
     "toolsets": 11,
-    "endpoints": 243,
+    "endpoints": 249,
     "byTier": {
-      "read": 83,
-      "write": 101,
+      "read": 86,
+      "write": 102,
       "send": 17,
       "broadcast": 8,
-      "destructive": 34
+      "destructive": 36
     }
   },
   "toolsets": [
@@ -26,7 +26,7 @@
       "label": "Flow",
       "labelHe": "תזרים",
       "description": "Sub-flows, tags, user fields, bot fields, shortcuts, closing notes, segments.",
-      "toolCount": 43
+      "toolCount": 44
     },
     {
       "id": "conversations",
@@ -47,7 +47,7 @@
       "label": "Messaging",
       "labelHe": "שליחה",
       "description": "Send to one subscriber, or broadcast to many. Handle with care.",
-      "toolCount": 21
+      "toolCount": 24
     },
     {
       "id": "shop",
@@ -61,7 +61,7 @@
       "label": "Team",
       "labelHe": "צוות",
       "description": "Ticket lists, team labels and agent groups.",
-      "toolCount": 17
+      "toolCount": 19
     },
     {
       "id": "ai",
@@ -157,6 +157,13 @@
       "description": "Broadcast whatsapp template by user ids, you can find the namespace, name, lang, params from /api/whatapp-template/list, use use_default_values or params for wa_template"
     },
     {
+      "name": "cigchat_cancel_broadcast",
+      "toolset": "messaging",
+      "tier": "destructive",
+      "endpoint": "DELETE /subscriber/broadcast/cancel",
+      "description": "Cancel all pending recipients of a new, scheduled, or sending broadcast in the current flow."
+    },
+    {
       "name": "cigchat_clear_integration_ainvented",
       "toolset": "integrations",
       "tier": "destructive",
@@ -225,6 +232,13 @@
       "tier": "write",
       "endpoint": "POST /shop/product-tags/create",
       "description": "Create new tag"
+    },
+    {
+      "name": "cigchat_delete_broadcast",
+      "toolset": "messaging",
+      "tier": "destructive",
+      "endpoint": "DELETE /subscriber/broadcast/delete",
+      "description": "Delete a cancelled broadcast and its recipient records from the current flow."
     },
     {
       "name": "cigchat_delete_product_tag",
@@ -449,6 +463,13 @@
       "tier": "destructive",
       "endpoint": "DELETE /flow/delete-user-field-by-name",
       "description": "Delete user field by name"
+    },
+    {
+      "name": "cigchat_flow_error_logs_data",
+      "toolset": "flow",
+      "tier": "read",
+      "endpoint": "GET /flow/error-logs/data",
+      "description": "Get error logs for the current flow."
     },
     {
       "name": "cigchat_flow_inbound_webhooks",
@@ -687,6 +708,13 @@
       "tier": "read",
       "endpoint": "GET /integration/claude",
       "description": "Get the config of CaludeAi integration"
+    },
+    {
+      "name": "cigchat_list_broadcasts",
+      "toolset": "messaging",
+      "tier": "read",
+      "endpoint": "GET /subscriber/broadcasts",
+      "description": "Get broadcasts in the current flow. Filter by the stored broadcast status when required."
     },
     {
       "name": "cigchat_list_closing_notes",
@@ -1639,6 +1667,20 @@
       "tier": "read",
       "endpoint": "GET /team-members",
       "description": "Get list of workspace members"
+    },
+    {
+      "name": "cigchat_team_ticket_item_add_comment",
+      "toolset": "team",
+      "tier": "write",
+      "endpoint": "POST /team/ticket-lists/{listId}/items/{listItemId}/comments",
+      "description": "Add a comment and optional attachment URL to a ticket"
+    },
+    {
+      "name": "cigchat_team_ticket_item_comments",
+      "toolset": "team",
+      "tier": "read",
+      "endpoint": "GET /team/ticket-lists/{listId}/items/{listItemId}/comments",
+      "description": "Get comments and attachment URLs for a ticket"
     },
     {
       "name": "cigchat_team_ticket_lists",

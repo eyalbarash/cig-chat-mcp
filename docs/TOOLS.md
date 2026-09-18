@@ -2,15 +2,15 @@
 
 _Generated from the cig.chat OpenAPI spec — do not edit by hand._
 
-**243 tools** across **11 toolsets**, wrapping 243 API operations.
+**249 tools** across **11 toolsets**, wrapping 249 API operations.
 
 | Tier | Tools | Meaning |
 | --- | ---: | --- |
-| `read` | 83 | Reads data. No state change. |
-| `write` | 101 | Reversible change. |
+| `read` | 86 | Reads data. No state change. |
+| `write` | 102 | Reversible change. |
 | `send` | 17 | Delivers a message to one person. |
 | `broadcast` | 8 | Delivers to many. Confirmation required. |
-| `destructive` | 34 | Irreversible. Confirmation required. |
+| `destructive` | 36 | Irreversible. Confirmation required. |
 
 ## Subscribers — `subscribers` (40)
 
@@ -59,7 +59,7 @@ Find, create and update subscribers; tags, labels, fields, opt-in state.
 | `cigchat_subscriber_unsubscribe_from_bot` | write | `DELETE /subscriber/unsubscribe-from-bot` | Unsubscribe from bot |
 | `cigchat_subscriber_update` | write | `PUT /subscriber/update` | Update subscriber data |
 
-## Flow — `flow` (43)
+## Flow — `flow` (44)
 
 Sub-flows, tags, user fields, bot fields, shortcuts, closing notes, segments.
 
@@ -85,6 +85,7 @@ Sub-flows, tags, user fields, bot fields, shortcuts, closing notes, segments.
 | `cigchat_flow_delete_tag_by_name` | destructive | `DELETE /flow/delete-tag-by-name` | Delete tag by tag name |
 | `cigchat_flow_delete_user_field` | destructive | `DELETE /flow/delete-user-field` | Delete user field |
 | `cigchat_flow_delete_user_field_by_name` | destructive | `DELETE /flow/delete-user-field-by-name` | Delete user field by name |
+| `cigchat_flow_error_logs_data` | read | `GET /flow/error-logs/data` | Get error logs for the current flow. |
 | `cigchat_flow_inbound_webhooks` | read | `GET /flow/inbound-webhooks` | Get list of inbound webhooks by flow |
 | `cigchat_flow_set_bot_field` | write | `PUT /flow/set-bot-field` | update bot field value |
 | `cigchat_flow_set_bot_field_by_name` | write | `PUT /flow/set-bot-field-by-name` | update bot field value by bot field name |
@@ -133,7 +134,7 @@ WhatsApp and Facebook utility message templates.
 | `cigchat_whatsapp_template_list` | read | `POST /whatsapp-template/list` | List Whatsapp templates |
 | `cigchat_whatsapp_template_sync` | write | `POST /whatsapp-template/sync` | Sync Whatsapp templates |
 
-## Messaging — `messaging` (21)
+## Messaging — `messaging` (24)
 
 Send to one subscriber, or broadcast to many. Handle with care.
 
@@ -147,6 +148,9 @@ Send to one subscriber, or broadcast to many. Handle with care.
 | `cigchat_broadcast_to_list` | broadcast | `POST /subscriber/broadcast` | Broadcast sub flow by user ns list, available types: EMAIL,SMS,WHATSAPP_TEMPLATE,FACEBOOK_NOTIFICATION |
 | `cigchat_broadcast_whatsapp_template_by_tag` | broadcast | `POST /subscriber/broadcast-whatsapp-template-by-tag` | Broadcast whatsapp template by tags, you can find the namespace, name, lang, params from /api/whatapp-template/list, use use_default_values  |
 | `cigchat_broadcast_whatsapp_template_by_user_id` | broadcast | `POST /subscriber/broadcast-whatsapp-template-by-user-id` | Broadcast whatsapp template by user ids, you can find the namespace, name, lang, params from /api/whatapp-template/list, use use_default_val |
+| `cigchat_cancel_broadcast` | destructive | `DELETE /subscriber/broadcast/cancel` | Cancel all pending recipients of a new, scheduled, or sending broadcast in the current flow. |
+| `cigchat_delete_broadcast` | destructive | `DELETE /subscriber/broadcast/delete` | Delete a cancelled broadcast and its recipient records from the current flow. |
+| `cigchat_list_broadcasts` | read | `GET /subscriber/broadcasts` | Get broadcasts in the current flow. Filter by the stored broadcast status when required. |
 | `cigchat_send_content` | send | `POST /subscriber/send-content` | Send content to subscriber, learn more about how to use dynamic content |
 | `cigchat_send_email` | send | `POST /subscriber/send-email` | Send email content to subscriber |
 | `cigchat_send_fb_utility_template` | send | `POST /subscriber/send-facebook-utility-message-template` | Send Facebook utility message template to subscriber |
@@ -217,7 +221,7 @@ Products, variants, types, vendors, tags, orders, discounts, locations, carts.
 | `cigchat_subscriber_update_order_status` | send | `POST /subscriber/update-order-status` | Update order status to paid,ordered,processing,shipped,completed,cancelled,refunded |
 | `cigchat_update_product_tag` | write | `PUT /shop/product-tags/{tagId}/update` | Update tag name. |
 
-## Team — `team` (17)
+## Team — `team` (19)
 
 Ticket lists, team labels and agent groups.
 
@@ -231,6 +235,8 @@ Ticket lists, team labels and agent groups.
 | `cigchat_team_delete_label` | destructive | `DELETE /team/delete-label` | Delete label |
 | `cigchat_team_delete_label_by_name` | destructive | `DELETE /team/delete-label-by-name` | Delete label by label name |
 | `cigchat_team_labels` | read | `GET /team/labels` | Get list of labels |
+| `cigchat_team_ticket_item_add_comment` | write | `POST /team/ticket-lists/{listId}/items/{listItemId}/comments` | Add a comment and optional attachment URL to a ticket |
+| `cigchat_team_ticket_item_comments` | read | `GET /team/ticket-lists/{listId}/items/{listItemId}/comments` | Get comments and attachment URLs for a ticket |
 | `cigchat_team_ticket_lists` | read | `GET /team/ticket-lists` | Get list of ticket lists |
 | `cigchat_team_ticket_lists_create` | write | `POST /team/ticket-lists/{listId}/create` | create new ticket |
 | `cigchat_team_ticket_lists_delete` | destructive | `DELETE /team/ticket-lists/{listId}/delete/{listItemId}` | delete a ticket |

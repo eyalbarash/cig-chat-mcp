@@ -4,7 +4,7 @@ MCP server for the [cig.chat](https://www.cig.chat) API. Connect Claude, Cursor,
 MCP client to your cig.chat bot and drive subscribers, tags, flows, WhatsApp templates,
 broadcasts and the shop in plain language.
 
-**243 API operations · 250 tools · 13 toolsets.**
+**249 API operations · 256 tools · 13 toolsets.**
 
 > This package is a client for **your own** cig.chat account. It ships with no credentials
 > and no default account. You supply your own bot token at setup, it stays on your machine,
@@ -122,7 +122,7 @@ Every write becomes a no-op that reports exactly what it _would_ have sent. Read
 
 ### Toolsets
 
-250 tools is a lot of context on clients that send every schema up front. Narrow with
+256 tools is a lot of context on clients that send every schema up front. Narrow with
 `CIGCHAT_TOOLSETS`, or set it to `dynamic` to start with just the core tools and let the
 assistant switch on what it needs.
 

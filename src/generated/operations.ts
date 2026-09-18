@@ -767,6 +767,23 @@ export const OPERATIONS: OperationSpec[] = [
     "operationId": "flowBotUserBroadcastWhatsappTemplateByUserId"
   },
   {
+    "name": "cigchat_cancel_broadcast",
+    "description": "Cancel all pending recipients of a new, scheduled, or sending broadcast in the current flow. [DELETE /subscriber/broadcast/cancel] DESTRUCTIVE: irreversible. Call once without `confirm` to get an impact statement first. Requires the \"Send Message\" scope on the token.",
+    "toolset": "messaging",
+    "tier": "destructive",
+    "method": "DELETE",
+    "path": "/subscriber/broadcast/cancel",
+    "params": [
+      {
+        "name": "broadcast_ns",
+        "in": "query",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "operationId": "flowBotUserCancelBroadcast"
+  },
+  {
     "name": "cigchat_clear_integration_ainvented",
     "description": "Clear the config of Ainvented integration [DELETE /integration/ainvented] DESTRUCTIVE: irreversible. Call once without `confirm` to get an impact statement first. Requires the \"Manage Team\" scope on the token.",
     "toolset": "integrations",
@@ -872,6 +889,23 @@ export const OPERATIONS: OperationSpec[] = [
       }
     ],
     "operationId": "CreateTag"
+  },
+  {
+    "name": "cigchat_delete_broadcast",
+    "description": "Delete a cancelled broadcast and its recipient records from the current flow. [DELETE /subscriber/broadcast/delete] DESTRUCTIVE: irreversible. Call once without `confirm` to get an impact statement first. Requires the \"Send Message\" scope on the token.",
+    "toolset": "messaging",
+    "tier": "destructive",
+    "method": "DELETE",
+    "path": "/subscriber/broadcast/delete",
+    "params": [
+      {
+        "name": "broadcast_ns",
+        "in": "query",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "operationId": "flowBotUserDeleteBroadcast"
   },
   {
     "name": "cigchat_delete_product_tag",
@@ -1809,6 +1843,59 @@ export const OPERATIONS: OperationSpec[] = [
     "operationId": "flowDeleteUserFieldByName"
   },
   {
+    "name": "cigchat_flow_error_logs_data",
+    "description": "Get error logs for the current flow. [GET /flow/error-logs/data] Requires the \"Manage Flow\" scope on the token.",
+    "toolset": "flow",
+    "tier": "read",
+    "method": "GET",
+    "path": "/flow/error-logs/data",
+    "params": [
+      {
+        "name": "node_ns",
+        "in": "query",
+        "type": "string",
+        "description": "Node namespace"
+      },
+      {
+        "name": "user_ns",
+        "in": "query",
+        "type": "string",
+        "description": "Subscriber user namespace"
+      },
+      {
+        "name": "search",
+        "in": "query",
+        "type": "string",
+        "description": "Partial error description"
+      },
+      {
+        "name": "start_time",
+        "in": "query",
+        "type": "integer",
+        "description": "Unix timestamp no older than one month"
+      },
+      {
+        "name": "end_time",
+        "in": "query",
+        "type": "integer",
+        "description": "Unix timestamp no older than one month"
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "type": "integer",
+        "description": "Number of items, between 1 and 1000"
+      },
+      {
+        "name": "page",
+        "in": "query",
+        "type": "integer",
+        "description": "Page number, between 1 and 100"
+      }
+    ],
+    "operationId": "flowErrorLogData"
+  },
+  {
     "name": "cigchat_flow_inbound_webhooks",
     "description": "Get list of inbound webhooks by flow [GET /flow/inbound-webhooks] Requires the \"Manage Flow\" scope on the token.",
     "toolset": "flow",
@@ -2547,6 +2634,39 @@ export const OPERATIONS: OperationSpec[] = [
     "operationId": "getCaludeAiData"
   },
   {
+    "name": "cigchat_list_broadcasts",
+    "description": "Get broadcasts in the current flow. Filter by the stored broadcast status when required. [GET /subscriber/broadcasts] Requires the \"Send Message\" scope on the token.",
+    "toolset": "messaging",
+    "tier": "read",
+    "method": "GET",
+    "path": "/subscriber/broadcasts",
+    "params": [
+      {
+        "name": "limit",
+        "in": "query",
+        "type": "integer"
+      },
+      {
+        "name": "page",
+        "in": "query",
+        "type": "integer"
+      },
+      {
+        "name": "status",
+        "in": "query",
+        "type": "string",
+        "description": "New, Scheduled, Completed, or Cancelled",
+        "enum": [
+          "New",
+          "Scheduled",
+          "Completed",
+          "Cancelled"
+        ]
+      }
+    ],
+    "operationId": "flowBotUserBroadcasts"
+  },
+  {
     "name": "cigchat_list_closing_notes",
     "description": "Get closing notes for the current flow [GET /flow/closing-notes] Requires the \"Manage Flow\" scope on the token.",
     "toolset": "flow",
@@ -2998,7 +3118,7 @@ export const OPERATIONS: OperationSpec[] = [
         "name": "user_id",
         "in": "query",
         "type": "integer",
-        "description": "Workspace member ID. When omitted, media uploaded by any member is returned."
+        "description": "Workspace member ID. When omitted, media uploaded by any member is returned. When the value is 0, it will return media uploaded from bot or bot users"
       },
       {
         "name": "type",
@@ -7500,6 +7620,78 @@ export const OPERATIONS: OperationSpec[] = [
       }
     ],
     "operationId": "workspaceMembers"
+  },
+  {
+    "name": "cigchat_team_ticket_item_add_comment",
+    "description": "Add a comment and optional attachment URL to a ticket [POST /team/ticket-lists/{listId}/items/{listItemId}/comments] Requires the \"Manage Team\" scope on the token.",
+    "toolset": "team",
+    "tier": "write",
+    "method": "POST",
+    "path": "/team/ticket-lists/{listId}/items/{listItemId}/comments",
+    "params": [
+      {
+        "name": "listId",
+        "in": "path",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "listItemId",
+        "in": "path",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "content",
+        "in": "body",
+        "type": "string",
+        "required": true,
+        "example": "The issue has been investigated."
+      },
+      {
+        "name": "file",
+        "in": "body",
+        "type": "string",
+        "description": "HTTPS attachment URL",
+        "example": "https://files.example.com/invoice.pdf"
+      }
+    ],
+    "operationId": "teamCreateTicketListItemComment"
+  },
+  {
+    "name": "cigchat_team_ticket_item_comments",
+    "description": "Get comments and attachment URLs for a ticket [GET /team/ticket-lists/{listId}/items/{listItemId}/comments] Requires the \"Manage Team\" scope on the token.",
+    "toolset": "team",
+    "tier": "read",
+    "method": "GET",
+    "path": "/team/ticket-lists/{listId}/items/{listItemId}/comments",
+    "params": [
+      {
+        "name": "listId",
+        "in": "path",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "listItemId",
+        "in": "path",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "type": "integer",
+        "description": "Number of comments in the response, between 1 and 100"
+      },
+      {
+        "name": "page",
+        "in": "query",
+        "type": "integer",
+        "description": "Page number"
+      }
+    ],
+    "operationId": "teamTicketListItemComments"
   },
   {
     "name": "cigchat_team_ticket_lists",

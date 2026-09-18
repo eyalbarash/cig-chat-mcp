@@ -91,6 +91,7 @@ export const TOOLSETS: { id: string; label: string; labelHe: string; description
 /** OpenAPI tag → toolset id. */
 export const TAG_TO_TOOLSET: Record<string, string> = {
   'Agent Group': 'team',
+  Broadcast: 'messaging',
   Ecommerce: 'shop',
   'Facebook Utility Message Template': 'whatsapp',
   Flow: 'flow',
@@ -250,6 +251,16 @@ export const NAME_OVERRIDES: Record<string, string> = {
     'cigchat_broadcast_fb_utility_template_by_tag',
   flowBotUserBroadcastFacebookUtilityMessageTemplateByUserId:
     'cigchat_broadcast_fb_utility_template_by_user_id',
+
+  // Broadcast management (added upstream 09/2026). Cancel and delete are DELETEs, so they
+  // inherit the destructive tier and its confirmation step.
+  flowBotUserBroadcasts: 'cigchat_list_broadcasts',
+  flowBotUserCancelBroadcast: 'cigchat_cancel_broadcast',
+  flowBotUserDeleteBroadcast: 'cigchat_delete_broadcast',
+
+  // Ticket comments: GET and POST share one path.
+  teamTicketListItemComments: 'cigchat_team_ticket_item_comments',
+  teamCreateTicketListItemComment: 'cigchat_team_ticket_item_add_comment',
 
   flowBotUsers: 'cigchat_search_subscribers',
   flowBotUserInfo: 'cigchat_get_subscriber',
