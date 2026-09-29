@@ -99,6 +99,14 @@
             "title": "AI Agent Ns",
             "type": "string"
           },
+          "ai_mcp_list": {
+            "description": "Ids of the MCP servers attached to this agent",
+            "items": {
+              "type": "integer"
+            },
+            "title": "AI MCP List",
+            "type": "array"
+          },
           "ai_model": {
             "title": "AI Model",
             "type": "string"
@@ -162,6 +170,106 @@
         "type": "object",
         "xml": {
           "name": "AiAgentResource"
+        }
+      },
+      "AiMcpServer": {
+        "description": "Flow MCP server model",
+        "properties": {
+          "allowed_tools": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Allowed tools",
+            "type": "array"
+          },
+          "auth_type": {
+            "description": "0: none, 1: bearer token, 2: custom headers",
+            "example": 0,
+            "title": "Auth type",
+            "type": "integer"
+          },
+          "bearer_token_set": {
+            "description": "Whether a bearer token is stored",
+            "example": false,
+            "title": "Bearer token set",
+            "type": "boolean"
+          },
+          "headers": {
+            "items": {
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "has_test_value": {
+                  "type": "boolean"
+                },
+                "value_set": {
+                  "description": "Present only for a literal header",
+                  "type": "boolean"
+                },
+                "var_ns": {
+                  "description": "Present only for a header bound to a bot field",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "title": "Headers",
+            "type": "array"
+          },
+          "id": {
+            "example": 1,
+            "title": "Id",
+            "type": "integer"
+          },
+          "is_locked": {
+            "description": "1 when the server came from a protected template",
+            "example": 0,
+            "title": "Is locked",
+            "type": "integer"
+          },
+          "name": {
+            "example": "Internal tools",
+            "title": "Name",
+            "type": "string"
+          },
+          "require_approval": {
+            "example": 0,
+            "title": "Require approval",
+            "type": "integer"
+          },
+          "server_url": {
+            "example": "https://mcp.example.com/sse",
+            "title": "Server url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "server_url"
+        ],
+        "title": "AiMcpServer",
+        "type": "object",
+        "xml": {
+          "name": "AiMcpServer"
+        }
+      },
+      "AiMcpServerResource": {
+        "description": "MCP server resource",
+        "properties": {
+          "data": {
+            "description": "Data wrapper",
+            "items": {
+              "$ref": "#/components/schemas/AiMcpServer"
+            },
+            "title": "Data",
+            "type": "array"
+          }
+        },
+        "title": "AiMcpServerResource",
+        "type": "object",
+        "xml": {
+          "name": "AiMcpServerResource"
         }
       },
       "AiTask": {
@@ -3877,6 +3985,146 @@
         ]
       }
     },
+    "/flow/ai-agent/attach-mcp-server": {
+      "post": {
+        "description": "<code>Scope required: (Manage Flow)</code><br><br>Attach an MCP server to an AI Agent. The attachment only takes effect when the agent's ai_provider is openai-responses or xai-responses; the effective field in the response reports this.",
+        "operationId": "flowAttachMcpServerToAiAgent",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "ai_agent_ns": {
+                    "example": "f123ag456",
+                    "type": "string"
+                  },
+                  "id": {
+                    "example": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "ai_agent_ns",
+                  "id"
+                ],
+                "title": "AI Agent MCP Attachment",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/AiAgent"
+                    },
+                    "effective": {
+                      "type": "boolean"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
+                  },
+                  "title": "Response Body",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                }
+              }
+            },
+            "description": "Response Error"
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Flow AI Hub"
+        ]
+      }
+    },
+    "/flow/ai-agent/detach-mcp-server": {
+      "delete": {
+        "description": "<code>Scope required: (Manage Flow)</code><br><br>Detach an MCP server from an AI Agent. The attachment only takes effect when the agent's ai_provider is openai-responses or xai-responses; the effective field in the response reports this.",
+        "operationId": "flowDetachMcpServerFromAiAgent",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "ai_agent_ns": {
+                    "example": "f123ag456",
+                    "type": "string"
+                  },
+                  "id": {
+                    "example": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "ai_agent_ns",
+                  "id"
+                ],
+                "title": "AI Agent MCP Attachment",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/AiAgent"
+                    },
+                    "effective": {
+                      "type": "boolean"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
+                  },
+                  "title": "Response Body",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                }
+              }
+            },
+            "description": "Response Error"
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Flow AI Hub"
+        ]
+      }
+    },
     "/flow/ai-agents": {
       "get": {
         "description": "<code>Scope required: (Manage Flow)</code><br><br>Get list of ai agents by flow",
@@ -3953,6 +4201,182 @@
           }
         },
         "summary": "",
+        "tags": [
+          "Flow AI Hub"
+        ]
+      }
+    },
+    "/flow/ai-mcp-server/list-tools": {
+      "post": {
+        "description": "<code>Scope required: (Manage Flow)</code><br><br>Connect to a saved MCP server and relay its tool list. Discovery sends each custom header's test_value; a header bound to a Bot Field must carry a test_value for discovery to authenticate.",
+        "operationId": "flowAiMcpServerListTools",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "id": {
+                    "example": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "id"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "tools": {
+                          "items": {
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "error": {
+                      "example": "Connection failed",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
+                  },
+                  "title": "Response Body",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                }
+              }
+            },
+            "description": "Response Error"
+          }
+        },
+        "summary": "List the tools an MCP server exposes",
+        "tags": [
+          "Flow AI Hub"
+        ]
+      }
+    },
+    "/flow/ai-mcp-servers": {
+      "get": {
+        "description": "<code>Scope required: (Manage Flow)</code><br><br>Get MCP servers for the current flow",
+        "operationId": "flowAiMcpServers",
+        "parameters": [
+          {
+            "description": "Number of items in the response",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Page number",
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Search by MCP server name",
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AiMcpServerResource"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                }
+              }
+            },
+            "description": "Response Error"
+          }
+        },
+        "summary": "List MCP servers",
+        "tags": [
+          "Flow AI Hub"
+        ]
+      }
+    },
+    "/flow/ai-mcp-servers/{id}": {
+      "get": {
+        "description": "<code>Scope required: (Manage Flow)</code><br><br>Get an MCP server from the current flow",
+        "operationId": "flowAiMcpServer",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AiMcpServerResource"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                }
+              }
+            },
+            "description": "Response Error"
+          }
+        },
+        "summary": "Get an MCP server",
         "tags": [
           "Flow AI Hub"
         ]
@@ -4382,7 +4806,7 @@
     },
     "/flow/conversations/data": {
       "get": {
-        "description": "<code>Scope required: (Manage Flow)</code><br><br>Get the flow conversation data, only return the closed conversations",
+        "description": "<code>Scope required: (Manage Flow)</code><br><br>Get the flow conversation data, by default it only return the closed conversations",
         "operationId": "flowConversationsData",
         "parameters": [
           {
@@ -4391,6 +4815,36 @@
             "name": "user_ns",
             "required": false,
             "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Conversation status: open, close, or all. Defaults to close.",
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "default": "close",
+              "enum": [
+                "open",
+                "close",
+                "all"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Date column used by start_time and end_time: created_at or last_close_at. last_closed_at is also accepted as an alias for last_close_at.",
+            "in": "query",
+            "name": "date_type",
+            "required": false,
+            "schema": {
+              "default": "created_at",
+              "enum": [
+                "created_at",
+                "last_close_at",
+                "last_closed_at"
+              ],
               "type": "string"
             }
           },
@@ -4470,6 +4924,99 @@
         "summary": "",
         "tags": [
           "Flow Conversation"
+        ]
+      }
+    },
+    "/flow/create-ai-mcp-server": {
+      "post": {
+        "description": "<code>Scope required: (Manage Flow)</code><br><br>Create an MCP server for the current flow",
+        "operationId": "flowCreateAiMcpServer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "allowed_tools": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "auth_type": {
+                    "description": "0: none, 1: bearer token, 2: custom headers",
+                    "example": 0,
+                    "maximum": 2,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "bearer_token": {
+                    "type": "string"
+                  },
+                  "headers": {
+                    "items": {
+                      "description": "Each row carries value OR var_ns, never both",
+                      "properties": {
+                        "field": {
+                          "type": "string"
+                        },
+                        "test_value": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "var_ns": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "name": {
+                    "example": "Internal tools",
+                    "type": "string"
+                  },
+                  "server_url": {
+                    "example": "https://mcp.example.com/sse",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "server_url"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AiMcpServerResource"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                }
+              }
+            },
+            "description": "Response Error"
+          }
+        },
+        "summary": "Create an MCP server",
+        "tags": [
+          "Flow AI Hub"
         ]
       }
     },
@@ -5036,6 +5583,57 @@
         "summary": "",
         "tags": [
           "Flow Custom Events"
+        ]
+      }
+    },
+    "/flow/delete-ai-mcp-server": {
+      "delete": {
+        "description": "<code>Scope required: (Manage Flow)</code><br><br>Delete an MCP server from the current flow",
+        "operationId": "flowDeleteAiMcpServer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "id": {
+                    "example": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "id"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseOk"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                }
+              }
+            },
+            "description": "Response Error"
+          }
+        },
+        "summary": "Delete an MCP server",
+        "tags": [
+          "Flow AI Hub"
         ]
       }
     },
@@ -6579,6 +7177,99 @@
           }
         },
         "summary": "",
+        "tags": [
+          "Flow AI Hub"
+        ]
+      }
+    },
+    "/flow/update-ai-mcp-server": {
+      "put": {
+        "description": "<code>Scope required: (Manage Flow)</code><br><br>Update an MCP server in the current flow",
+        "operationId": "flowUpdateAiMcpServer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "allowed_tools": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "auth_type": {
+                    "description": "0: none, 1: bearer token, 2: custom headers",
+                    "maximum": 2,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "bearer_token": {
+                    "type": "string"
+                  },
+                  "headers": {
+                    "items": {
+                      "description": "Each row carries value OR var_ns, never both",
+                      "properties": {
+                        "field": {
+                          "type": "string"
+                        },
+                        "test_value": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "var_ns": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "id": {
+                    "example": 1,
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "server_url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AiMcpServerResource"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                }
+              }
+            },
+            "description": "Response Error"
+          }
+        },
+        "summary": "Update an MCP server",
         "tags": [
           "Flow AI Hub"
         ]
@@ -8690,6 +9381,91 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/MediaResource"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                }
+              }
+            },
+            "description": "Response Error"
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Workspace"
+        ]
+      }
+    },
+    "/media-library/summary": {
+      "get": {
+        "description": "<code>Scope required: (Manage Team)</code><br><br>Get the total size, in bytes, of member-uploaded media grouped by media type",
+        "operationId": "memberMediaLibrarySummary",
+        "parameters": [
+          {
+            "description": "Workspace member ID. When omitted, it is for all media uploaded. When the value is 0, only media uploaded from bots or bot users is included",
+            "in": "query",
+            "name": "user_id",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "total_used_size": {
+                          "example": 5242880,
+                          "format": "int64",
+                          "type": "integer"
+                        },
+                        "used_size_by_type": {
+                          "properties": {
+                            "audio": {
+                              "example": 1048576,
+                              "format": "int64",
+                              "type": "integer"
+                            },
+                            "file": {
+                              "example": 1048576,
+                              "format": "int64",
+                              "type": "integer"
+                            },
+                            "image": {
+                              "example": 1048576,
+                              "format": "int64",
+                              "type": "integer"
+                            },
+                            "video": {
+                              "example": 2097152,
+                              "format": "int64",
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
                 }
               }
             },

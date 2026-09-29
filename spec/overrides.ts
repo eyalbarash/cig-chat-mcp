@@ -127,6 +127,8 @@ export const READ_ONLY_OPERATIONS = new Set([
   'flowBotUserChatMessagesByMids',
   'flowViewAiAgentInfo',
   'flowViewAiTaskInfo',
+  // Connects to a saved MCP server and relays its tool list; nothing is stored.
+  'flowAiMcpServerListTools',
 ]);
 
 /** Explicit tier assignments that override the method-derived default. */
@@ -176,6 +178,8 @@ export const TIER_OVERRIDES: Record<string, Tier> = {
   flowBotUserUnsubscribeFromBot: 'write',
   flowBotUserRemoveFromCart: 'write',
   flowBotUserEmptyCart: 'write',
+  // Detaching an MCP server from an AI agent is undone by attaching it again.
+  flowDetachMcpServerFromAiAgent: 'write',
 };
 
 /**
@@ -223,6 +227,8 @@ export const NAME_OVERRIDES: Record<string, string> = {
   flowClosingNote: 'cigchat_get_closing_note',
   flowShortcuts: 'cigchat_list_shortcuts',
   flowShortcut: 'cigchat_get_shortcut',
+  flowAiMcpServers: 'cigchat_list_ai_mcp_servers',
+  flowAiMcpServer: 'cigchat_get_ai_mcp_server',
 
   // Every tool that puts a message in front of a person starts with `send_`.
   flowBotUserSendMainFlow: 'cigchat_send_main_flow',

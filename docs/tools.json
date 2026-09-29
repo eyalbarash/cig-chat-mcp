@@ -1,16 +1,16 @@
 {
   "package": "@cig-chat/mcp",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "counts": {
-    "tools": 249,
+    "tools": 258,
     "toolsets": 11,
-    "endpoints": 249,
+    "endpoints": 258,
     "byTier": {
-      "read": 86,
-      "write": 102,
+      "read": 90,
+      "write": 106,
       "send": 17,
       "broadcast": 8,
-      "destructive": 36
+      "destructive": 37
     }
   },
   "toolsets": [
@@ -68,7 +68,7 @@
       "label": "AI",
       "labelHe": "בינה מלאכותית",
       "description": "AI agents and tasks, provider settings, OpenAI embeddings.",
-      "toolCount": 13
+      "toolCount": 21
     },
     {
       "id": "integrations",
@@ -82,7 +82,7 @@
       "label": "Workspace",
       "labelHe": "סביבת עבודה",
       "description": "Workspace settings, members, analytics and account info.",
-      "toolCount": 17
+      "toolCount": 18
     },
     {
       "id": "templates",
@@ -297,6 +297,20 @@
       "description": "Get list of agents"
     },
     {
+      "name": "cigchat_flow_ai_agent_attach_mcp_server",
+      "toolset": "ai",
+      "tier": "write",
+      "endpoint": "POST /flow/ai-agent/attach-mcp-server",
+      "description": "Attach an MCP server to an AI Agent. The attachment only takes effect when the agent's ai_provider is openai-responses or xai-responses; the effective field in the response reports this."
+    },
+    {
+      "name": "cigchat_flow_ai_agent_detach_mcp_server",
+      "toolset": "ai",
+      "tier": "write",
+      "endpoint": "DELETE /flow/ai-agent/detach-mcp-server",
+      "description": "Detach an MCP server from an AI Agent. The attachment only takes effect when the agent's ai_provider is openai-responses or xai-responses; the effective field in the response reports this."
+    },
+    {
       "name": "cigchat_flow_ai_agent_info",
       "toolset": "ai",
       "tier": "read",
@@ -309,6 +323,13 @@
       "tier": "read",
       "endpoint": "GET /flow/ai-agents",
       "description": "Get list of ai agents by flow"
+    },
+    {
+      "name": "cigchat_flow_ai_mcp_server_list_tools",
+      "toolset": "ai",
+      "tier": "read",
+      "endpoint": "POST /flow/ai-mcp-server/list-tools",
+      "description": "Connect to a saved MCP server and relay its tool list. Discovery sends each custom header's test_value; a header bound to a Bot Field must carry a test_value for discovery to authenticate."
     },
     {
       "name": "cigchat_flow_ai_task_info",
@@ -350,7 +371,14 @@
       "toolset": "conversations",
       "tier": "read",
       "endpoint": "GET /flow/conversations/data",
-      "description": "Get the flow conversation data, only return the closed conversations"
+      "description": "Get the flow conversation data, by default it only return the closed conversations"
+    },
+    {
+      "name": "cigchat_flow_create_ai_mcp_server",
+      "toolset": "ai",
+      "tier": "write",
+      "endpoint": "POST /flow/create-ai-mcp-server",
+      "description": "Create an MCP server for the current flow"
     },
     {
       "name": "cigchat_flow_create_bot_field",
@@ -400,6 +428,13 @@
       "tier": "read",
       "endpoint": "GET /flow/custom-events/summary",
       "description": "Get the flow custom event summary"
+    },
+    {
+      "name": "cigchat_flow_delete_ai_mcp_server",
+      "toolset": "ai",
+      "tier": "destructive",
+      "endpoint": "DELETE /flow/delete-ai-mcp-server",
+      "description": "Delete an MCP server from the current flow"
     },
     {
       "name": "cigchat_flow_delete_bot_field",
@@ -563,6 +598,13 @@
       "description": "update Ai Agent provider and model, available ai_provider: openai, openai-responses, deepseek, xai, xai-responses, claude, gemini, groq, ainvented"
     },
     {
+      "name": "cigchat_flow_update_ai_mcp_server",
+      "toolset": "ai",
+      "tier": "write",
+      "endpoint": "PUT /flow/update-ai-mcp-server",
+      "description": "Update an MCP server in the current flow"
+    },
+    {
       "name": "cigchat_flow_update_ai_task_provider",
       "toolset": "ai",
       "tier": "write",
@@ -596,6 +638,13 @@
       "tier": "read",
       "endpoint": "GET /flow/user-fields",
       "description": "Get list of user fields by flow"
+    },
+    {
+      "name": "cigchat_get_ai_mcp_server",
+      "toolset": "ai",
+      "tier": "read",
+      "endpoint": "GET /flow/ai-mcp-servers/{id}",
+      "description": "Get an MCP server from the current flow"
     },
     {
       "name": "cigchat_get_closing_note",
@@ -708,6 +757,13 @@
       "tier": "read",
       "endpoint": "GET /integration/claude",
       "description": "Get the config of CaludeAi integration"
+    },
+    {
+      "name": "cigchat_list_ai_mcp_servers",
+      "toolset": "ai",
+      "tier": "read",
+      "endpoint": "GET /flow/ai-mcp-servers",
+      "description": "Get MCP servers for the current flow"
     },
     {
       "name": "cigchat_list_broadcasts",
@@ -827,6 +883,13 @@
       "tier": "read",
       "endpoint": "GET /media-library",
       "description": "Get member-uploaded media"
+    },
+    {
+      "name": "cigchat_media_library_summary",
+      "toolset": "workspace",
+      "tier": "read",
+      "endpoint": "GET /media-library/summary",
+      "description": "Get the total size, in bytes, of member-uploaded media grouped by media type"
     },
     {
       "name": "cigchat_notifications_read",

@@ -2,15 +2,15 @@
 
 _Generated from the cig.chat OpenAPI spec — do not edit by hand._
 
-**249 tools** across **11 toolsets**, wrapping 249 API operations.
+**258 tools** across **11 toolsets**, wrapping 258 API operations.
 
 | Tier | Tools | Meaning |
 | --- | ---: | --- |
-| `read` | 86 | Reads data. No state change. |
-| `write` | 102 | Reversible change. |
+| `read` | 90 | Reads data. No state change. |
+| `write` | 106 | Reversible change. |
 | `send` | 17 | Delivers a message to one person. |
 | `broadcast` | 8 | Delivers to many. Confirmation required. |
-| `destructive` | 36 | Irreversible. Confirmation required. |
+| `destructive` | 37 | Irreversible. Confirmation required. |
 
 ## Subscribers — `subscribers` (40)
 
@@ -117,7 +117,7 @@ Conversation history and agent activity.
 | Tool | Tier | Endpoint | Description |
 | --- | --- | --- | --- |
 | `cigchat_flow_agent_activity_log_data` | read | `GET /flow/agent-activity-log/data` | Get the flow agent activity log data |
-| `cigchat_flow_conversations_data` | read | `GET /flow/conversations/data` | Get the flow conversation data, only return the closed conversations |
+| `cigchat_flow_conversations_data` | read | `GET /flow/conversations/data` | Get the flow conversation data, by default it only return the closed conversations |
 
 ## WhatsApp & Meta templates — `whatsapp` (8)
 
@@ -247,18 +247,26 @@ Ticket lists, team labels and agent groups.
 | `cigchat_team_update_agent_group` | write | `PUT /team/update-agent-group/{id}` | update agent group |
 | `cigchat_team_update_agent_group_users` | write | `POST /team/update-agent-group-users/{id}` | update agent group members |
 
-## AI — `ai` (13)
+## AI — `ai` (21)
 
 AI agents and tasks, provider settings, OpenAI embeddings.
 
 | Tool | Tier | Endpoint | Description |
 | --- | --- | --- | --- |
+| `cigchat_flow_ai_agent_attach_mcp_server` | write | `POST /flow/ai-agent/attach-mcp-server` | Attach an MCP server to an AI Agent. The attachment only takes effect when the agent's ai_provider is openai-responses or xai-responses; the |
+| `cigchat_flow_ai_agent_detach_mcp_server` | write | `DELETE /flow/ai-agent/detach-mcp-server` | Detach an MCP server from an AI Agent. The attachment only takes effect when the agent's ai_provider is openai-responses or xai-responses; t |
 | `cigchat_flow_ai_agent_info` | read | `POST /flow/ai-agent-info` | View Ai Agent details, including description, prompts, ai function list and more |
 | `cigchat_flow_ai_agents` | read | `GET /flow/ai-agents` | Get list of ai agents by flow |
+| `cigchat_flow_ai_mcp_server_list_tools` | read | `POST /flow/ai-mcp-server/list-tools` | Connect to a saved MCP server and relay its tool list. Discovery sends each custom header's test_value; a header bound to a Bot Field must c |
 | `cigchat_flow_ai_task_info` | read | `POST /flow/ai-task-info` | View Ai Task details |
 | `cigchat_flow_ai_tasks` | read | `GET /flow/ai-tasks` | Get list of ai tasks by flow |
+| `cigchat_flow_create_ai_mcp_server` | write | `POST /flow/create-ai-mcp-server` | Create an MCP server for the current flow |
+| `cigchat_flow_delete_ai_mcp_server` | destructive | `DELETE /flow/delete-ai-mcp-server` | Delete an MCP server from the current flow |
 | `cigchat_flow_update_ai_agent_provider` | write | `POST /flow/update-ai-agent-provider` | update Ai Agent provider and model, available ai_provider: openai, openai-responses, deepseek, xai, xai-responses, claude, gemini, groq, ain |
+| `cigchat_flow_update_ai_mcp_server` | write | `PUT /flow/update-ai-mcp-server` | Update an MCP server in the current flow |
 | `cigchat_flow_update_ai_task_provider` | write | `POST /flow/update-ai-task-provider` | update Ai Task provider and model, available ai_provider: openai, deepseek, xai, claude, gemini, groq, ainvented |
+| `cigchat_get_ai_mcp_server` | read | `GET /flow/ai-mcp-servers/{id}` | Get an MCP server from the current flow |
+| `cigchat_list_ai_mcp_servers` | read | `GET /flow/ai-mcp-servers` | Get MCP servers for the current flow |
 | `cigchat_openai_embeddings` | read | `GET /openai-embeddings` | Get list of OpenAI Embeddings |
 | `cigchat_openai_embeddings_create` | write | `POST /openai-embeddings/create` | Create new embedding |
 | `cigchat_openai_embeddings_delete` | destructive | `DELETE /openai-embeddings/{id}/delete` | Delete embedding |
@@ -304,7 +312,7 @@ Third-party integration credentials and mini-apps.
 | `cigchat_set_integration_xai` | write | `POST /integration/xai` | Update the config of XAi integration |
 | `cigchat_subscriber_app_trigger` | send | `POST /subscriber/app-trigger` | Trigger an app event on subscriber from installed min-app |
 
-## Workspace — `workspace` (17)
+## Workspace — `workspace` (18)
 
 Workspace settings, members, analytics and account info.
 
@@ -315,6 +323,7 @@ Workspace settings, members, analytics and account info.
 | `cigchat_flow_summary` | read | `GET /flow-summary` | Get the flow summary |
 | `cigchat_me` | read | `GET /me` | Get current user info |
 | `cigchat_media_library` | read | `GET /media-library` | Get member-uploaded media |
+| `cigchat_media_library_summary` | read | `GET /media-library/summary` | Get the total size, in bytes, of member-uploaded media grouped by media type |
 | `cigchat_notifications_read` | write | `POST /notifications/read` | Mark notification as read |
 | `cigchat_notifications_recent` | read | `GET /notifications/recent` | Get recent notifications and announcements |
 | `cigchat_team_bot_users` | read | `GET /team-bot-users` | Get list of bot users by seaching for name, phone, email and so on. |

@@ -1192,6 +1192,58 @@ export const OPERATIONS: OperationSpec[] = [
     "operationId": "flowAgents"
   },
   {
+    "name": "cigchat_flow_ai_agent_attach_mcp_server",
+    "description": "Attach an MCP server to an AI Agent. The attachment only takes effect when the agent's ai_provider is openai-responses or xai-responses; the effective field in the response reports this. [POST /flow/ai-agent/attach-mcp-server] Requires the \"Manage Flow\" scope on the token.",
+    "toolset": "ai",
+    "tier": "write",
+    "method": "POST",
+    "path": "/flow/ai-agent/attach-mcp-server",
+    "params": [
+      {
+        "name": "ai_agent_ns",
+        "in": "body",
+        "type": "string",
+        "required": true,
+        "example": "f123ag456",
+        "nsKind": "ai_agent"
+      },
+      {
+        "name": "id",
+        "in": "body",
+        "type": "integer",
+        "required": true,
+        "example": "1"
+      }
+    ],
+    "operationId": "flowAttachMcpServerToAiAgent"
+  },
+  {
+    "name": "cigchat_flow_ai_agent_detach_mcp_server",
+    "description": "Detach an MCP server from an AI Agent. The attachment only takes effect when the agent's ai_provider is openai-responses or xai-responses; the effective field in the response reports this. [DELETE /flow/ai-agent/detach-mcp-server] Requires the \"Manage Flow\" scope on the token.",
+    "toolset": "ai",
+    "tier": "write",
+    "method": "DELETE",
+    "path": "/flow/ai-agent/detach-mcp-server",
+    "params": [
+      {
+        "name": "ai_agent_ns",
+        "in": "body",
+        "type": "string",
+        "required": true,
+        "example": "f123ag456",
+        "nsKind": "ai_agent"
+      },
+      {
+        "name": "id",
+        "in": "body",
+        "type": "integer",
+        "required": true,
+        "example": "1"
+      }
+    ],
+    "operationId": "flowDetachMcpServerFromAiAgent"
+  },
+  {
     "name": "cigchat_flow_ai_agent_info",
     "description": "View Ai Agent details, including description, prompts, ai function list and more [POST /flow/ai-agent-info] Requires the \"Manage Flow\" scope on the token.",
     "toolset": "ai",
@@ -1252,6 +1304,25 @@ export const OPERATIONS: OperationSpec[] = [
       }
     ],
     "operationId": "flowAiAgents"
+  },
+  {
+    "name": "cigchat_flow_ai_mcp_server_list_tools",
+    "description": "Connect to a saved MCP server and relay its tool list. Discovery sends each custom header's test_value; a header bound to a Bot Field must carry a test_value for discovery to authenticate. [POST /flow/ai-mcp-server/list-tools] Requires the \"Manage Flow\" scope on the token.",
+    "toolset": "ai",
+    "tier": "read",
+    "method": "POST",
+    "path": "/flow/ai-mcp-server/list-tools",
+    "params": [
+      {
+        "name": "id",
+        "in": "body",
+        "type": "integer",
+        "required": true,
+        "example": "1"
+      }
+    ],
+    "operationId": "flowAiMcpServerListTools",
+    "readOnly": true
   },
   {
     "name": "cigchat_flow_ai_task_info",
@@ -1385,7 +1456,7 @@ export const OPERATIONS: OperationSpec[] = [
   },
   {
     "name": "cigchat_flow_conversations_data",
-    "description": "Get the flow conversation data, only return the closed conversations [GET /flow/conversations/data] Requires the \"Manage Flow\" scope on the token.",
+    "description": "Get the flow conversation data, by default it only return the closed conversations [GET /flow/conversations/data] Requires the \"Manage Flow\" scope on the token.",
     "toolset": "conversations",
     "tier": "read",
     "method": "GET",
@@ -1396,6 +1467,28 @@ export const OPERATIONS: OperationSpec[] = [
         "in": "query",
         "type": "string",
         "description": "Subscriber user_ns"
+      },
+      {
+        "name": "status",
+        "in": "query",
+        "type": "string",
+        "description": "Conversation status: open, close, or all. Defaults to close.",
+        "enum": [
+          "open",
+          "close",
+          "all"
+        ]
+      },
+      {
+        "name": "date_type",
+        "in": "query",
+        "type": "string",
+        "description": "Date column used by start_time and end_time: created_at or last_close_at. last_closed_at is also accepted as an alias for last_close_at.",
+        "enum": [
+          "created_at",
+          "last_close_at",
+          "last_closed_at"
+        ]
       },
       {
         "name": "start_time",
@@ -1423,6 +1516,87 @@ export const OPERATIONS: OperationSpec[] = [
       }
     ],
     "operationId": "flowConversationsData"
+  },
+  {
+    "name": "cigchat_flow_create_ai_mcp_server",
+    "description": "Create an MCP server for the current flow [POST /flow/create-ai-mcp-server] Requires the \"Manage Flow\" scope on the token.",
+    "toolset": "ai",
+    "tier": "write",
+    "method": "POST",
+    "path": "/flow/create-ai-mcp-server",
+    "params": [
+      {
+        "name": "allowed_tools",
+        "in": "body",
+        "type": "array",
+        "items": {
+          "name": "allowed_tools_item",
+          "in": "body",
+          "type": "string"
+        }
+      },
+      {
+        "name": "auth_type",
+        "in": "body",
+        "type": "integer",
+        "description": "0: none, 1: bearer token, 2: custom headers",
+        "example": "0"
+      },
+      {
+        "name": "bearer_token",
+        "in": "body",
+        "type": "string"
+      },
+      {
+        "name": "headers",
+        "in": "body",
+        "type": "array",
+        "items": {
+          "name": "headers_item",
+          "in": "body",
+          "type": "object",
+          "description": "Each row carries value OR var_ns, never both",
+          "properties": [
+            {
+              "name": "field",
+              "in": "body",
+              "type": "string"
+            },
+            {
+              "name": "test_value",
+              "in": "body",
+              "type": "string"
+            },
+            {
+              "name": "value",
+              "in": "body",
+              "type": "string"
+            },
+            {
+              "name": "var_ns",
+              "in": "body",
+              "type": "string",
+              "nsKind": "user_field"
+            }
+          ]
+        }
+      },
+      {
+        "name": "name",
+        "in": "body",
+        "type": "string",
+        "required": true,
+        "example": "Internal tools"
+      },
+      {
+        "name": "server_url",
+        "in": "body",
+        "type": "string",
+        "required": true,
+        "example": "https://mcp.example.com/sse"
+      }
+    ],
+    "operationId": "flowCreateAiMcpServer"
   },
   {
     "name": "cigchat_flow_create_bot_field",
@@ -1682,6 +1856,24 @@ export const OPERATIONS: OperationSpec[] = [
       }
     ],
     "operationId": "flowEventsSummary"
+  },
+  {
+    "name": "cigchat_flow_delete_ai_mcp_server",
+    "description": "Delete an MCP server from the current flow [DELETE /flow/delete-ai-mcp-server] DESTRUCTIVE: irreversible. Call once without `confirm` to get an impact statement first. Requires the \"Manage Flow\" scope on the token.",
+    "toolset": "ai",
+    "tier": "destructive",
+    "method": "DELETE",
+    "path": "/flow/delete-ai-mcp-server",
+    "params": [
+      {
+        "name": "id",
+        "in": "body",
+        "type": "integer",
+        "required": true,
+        "example": "1"
+      }
+    ],
+    "operationId": "flowDeleteAiMcpServer"
   },
   {
     "name": "cigchat_flow_delete_bot_field",
@@ -2232,6 +2424,89 @@ export const OPERATIONS: OperationSpec[] = [
     "operationId": "flowUpdateAiAgentProvider"
   },
   {
+    "name": "cigchat_flow_update_ai_mcp_server",
+    "description": "Update an MCP server in the current flow [PUT /flow/update-ai-mcp-server] Requires the \"Manage Flow\" scope on the token.",
+    "toolset": "ai",
+    "tier": "write",
+    "method": "PUT",
+    "path": "/flow/update-ai-mcp-server",
+    "params": [
+      {
+        "name": "allowed_tools",
+        "in": "body",
+        "type": "array",
+        "items": {
+          "name": "allowed_tools_item",
+          "in": "body",
+          "type": "string"
+        }
+      },
+      {
+        "name": "auth_type",
+        "in": "body",
+        "type": "integer",
+        "description": "0: none, 1: bearer token, 2: custom headers"
+      },
+      {
+        "name": "bearer_token",
+        "in": "body",
+        "type": "string"
+      },
+      {
+        "name": "headers",
+        "in": "body",
+        "type": "array",
+        "items": {
+          "name": "headers_item",
+          "in": "body",
+          "type": "object",
+          "description": "Each row carries value OR var_ns, never both",
+          "properties": [
+            {
+              "name": "field",
+              "in": "body",
+              "type": "string"
+            },
+            {
+              "name": "test_value",
+              "in": "body",
+              "type": "string"
+            },
+            {
+              "name": "value",
+              "in": "body",
+              "type": "string"
+            },
+            {
+              "name": "var_ns",
+              "in": "body",
+              "type": "string",
+              "nsKind": "user_field"
+            }
+          ]
+        }
+      },
+      {
+        "name": "id",
+        "in": "body",
+        "type": "integer",
+        "required": true,
+        "example": "1"
+      },
+      {
+        "name": "name",
+        "in": "body",
+        "type": "string"
+      },
+      {
+        "name": "server_url",
+        "in": "body",
+        "type": "string"
+      }
+    ],
+    "operationId": "flowUpdateAiMcpServer"
+  },
+  {
     "name": "cigchat_flow_update_ai_task_provider",
     "description": "update Ai Task provider and model, available ai_provider: openai, deepseek, xai, claude, gemini, groq, ainvented [POST /flow/update-ai-task-provider] Requires the \"Manage Flow\" scope on the token.",
     "toolset": "ai",
@@ -2401,6 +2676,23 @@ export const OPERATIONS: OperationSpec[] = [
       }
     ],
     "operationId": "flowUserFields"
+  },
+  {
+    "name": "cigchat_get_ai_mcp_server",
+    "description": "Get an MCP server from the current flow [GET /flow/ai-mcp-servers/{id}] Requires the \"Manage Flow\" scope on the token.",
+    "toolset": "ai",
+    "tier": "read",
+    "method": "GET",
+    "path": "/flow/ai-mcp-servers/{id}",
+    "params": [
+      {
+        "name": "id",
+        "in": "path",
+        "type": "integer",
+        "required": true
+      }
+    ],
+    "operationId": "flowAiMcpServer"
   },
   {
     "name": "cigchat_get_closing_note",
@@ -2632,6 +2924,35 @@ export const OPERATIONS: OperationSpec[] = [
     "path": "/integration/claude",
     "params": [],
     "operationId": "getCaludeAiData"
+  },
+  {
+    "name": "cigchat_list_ai_mcp_servers",
+    "description": "Get MCP servers for the current flow [GET /flow/ai-mcp-servers] Requires the \"Manage Flow\" scope on the token.",
+    "toolset": "ai",
+    "tier": "read",
+    "method": "GET",
+    "path": "/flow/ai-mcp-servers",
+    "params": [
+      {
+        "name": "limit",
+        "in": "query",
+        "type": "integer",
+        "description": "Number of items in the response"
+      },
+      {
+        "name": "page",
+        "in": "query",
+        "type": "integer",
+        "description": "Page number"
+      },
+      {
+        "name": "name",
+        "in": "query",
+        "type": "string",
+        "description": "Search by MCP server name"
+      }
+    ],
+    "operationId": "flowAiMcpServers"
   },
   {
     "name": "cigchat_list_broadcasts",
@@ -3128,6 +3449,23 @@ export const OPERATIONS: OperationSpec[] = [
       }
     ],
     "operationId": "memberMediaLibrary"
+  },
+  {
+    "name": "cigchat_media_library_summary",
+    "description": "Get the total size, in bytes, of member-uploaded media grouped by media type [GET /media-library/summary] Requires the \"Manage Team\" scope on the token.",
+    "toolset": "workspace",
+    "tier": "read",
+    "method": "GET",
+    "path": "/media-library/summary",
+    "params": [
+      {
+        "name": "user_id",
+        "in": "query",
+        "type": "integer",
+        "description": "Workspace member ID. When omitted, it is for all media uploaded. When the value is 0, only media uploaded from bots or bot users is included"
+      }
+    ],
+    "operationId": "memberMediaLibrarySummary"
   },
   {
     "name": "cigchat_notifications_read",

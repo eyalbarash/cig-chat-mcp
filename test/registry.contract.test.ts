@@ -110,7 +110,7 @@ describe('toolset and tier filtering', () => {
 
 describe('generated operation table', () => {
   it('covers the whole documented API surface', () => {
-    expect(OPERATIONS.length).toBe(249);
+    expect(OPERATIONS.length).toBe(258);
   });
 
   it('gates broadcast cancel and delete behind the confirmation step', () => {
@@ -121,6 +121,18 @@ describe('generated operation table', () => {
     expect(tierOf('cigchat_list_broadcasts')).toBe('read');
     expect(tierOf('cigchat_team_ticket_item_comments')).toBe('read');
     expect(tierOf('cigchat_team_ticket_item_add_comment')).toBe('write');
+  });
+
+  it('tiers the AI agent MCP server tools', () => {
+    const tierOf = (name: string): string | undefined =>
+      OPERATIONS.find((o) => o.name === name)?.tier;
+    expect(tierOf('cigchat_list_ai_mcp_servers')).toBe('read');
+    expect(tierOf('cigchat_get_ai_mcp_server')).toBe('read');
+    expect(tierOf('cigchat_flow_ai_mcp_server_list_tools')).toBe('read');
+    expect(tierOf('cigchat_flow_create_ai_mcp_server')).toBe('write');
+    expect(tierOf('cigchat_flow_ai_agent_detach_mcp_server')).toBe('write');
+    expect(tierOf('cigchat_flow_delete_ai_mcp_server')).toBe('destructive');
+    expect(tierOf('cigchat_media_library_summary')).toBe('read');
   });
 
   it('can size the audience of every tag- or segment-targeted broadcast', () => {
@@ -134,7 +146,7 @@ describe('generated operation table', () => {
 
   it('classifies the read-only POSTs as reads', () => {
     const readOnlyPosts = OPERATIONS.filter((o) => o.readOnly);
-    expect(readOnlyPosts.length).toBe(5);
+    expect(readOnlyPosts.length).toBe(6);
     for (const o of readOnlyPosts) expect(o.tier).toBe('read');
   });
 
