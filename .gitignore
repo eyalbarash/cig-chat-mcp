@@ -15,3 +15,5 @@ dist/
 coverage/
 .vitest/
 spec/openapi.raw.json
+# model cache the panda Bash hook (pandafilter) drops in the cwd
+.fastembed_cache/
