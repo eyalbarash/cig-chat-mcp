@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 /**
  * Exercises the built binary the way a person actually uses it — including piping into
  * `head`, which closes stdout early and used to crash the process with EPIPE.
@@ -22,7 +23,7 @@ const run = (args: string, opts: { env?: Record<string, string> } = {}): string 
 
 describe.skipIf(!existsSync(CLI))('cli', () => {
   it('prints its version', () => {
-    expect(run('--version').trim()).toMatch(/^\d+\.\d+\.\d+$/);
+    expect(run('--version').trim()).toBe(createRequire(import.meta.url)('../package.json').version);
   });
 
   it('runs through a node_modules/.bin-style symlink, the way npx invokes it', () => {

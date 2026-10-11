@@ -3,6 +3,7 @@
  * a transport; this is the thin layer that binds tools onto an McpServer.
  */
 
+import { createRequire } from 'node:module';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { Config } from './config.js';
 import { loadConfig } from './config.js';
@@ -14,7 +15,9 @@ import { LOOKUPS } from './resolve.js';
 import type { ToolContext } from './tools.js';
 
 export const SERVER_NAME = 'cigchat';
-export const SERVER_VERSION = '0.1.1';
+// Read from package.json so --version and the MCP handshake never lag a release again
+// (0.1.1 was baked in through 0.3.1). dist/ and src/ both sit one level below the root.
+export const SERVER_VERSION: string = createRequire(import.meta.url)('../package.json').version;
 
 export type BuiltServer = {
   server: McpServer;
