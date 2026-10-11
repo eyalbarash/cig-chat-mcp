@@ -1103,13 +1103,20 @@ export const OPERATIONS: OperationSpec[] = [
         "name": "action",
         "in": "query",
         "type": "string",
-        "description": "available action: open, close, assign, reply, note, pending, spam, invalid, add_collaborator, remove_collaborator, subscribe_to_bot, unsubscribe_from_bot, opt_in_sms, opt_out_sms, opt_in_email, opt_out_email"
+        "description": "available actions: open, close, assign, reply, note, pending, spam, invalid, add_collaborator, remove_collaborator, subscribe_to_bot, unsubscribe_from_bot, opt_in_sms, opt_out_sms, opt_in_email, opt_out_email, add_tag, remove_tag, add_label, remove_label. Allow to use multiple actions with Comma-separated actions, e.g. add_tag,remove_tag"
       },
       {
         "name": "source_type",
         "in": "query",
         "type": "string",
-        "description": "available source type: agent, bot, bot_user, api, webhook"
+        "description": "available source type: agent, bot, bot_user, api, webhook",
+        "enum": [
+          "agent",
+          "bot",
+          "bot_user",
+          "api",
+          "webhook"
+        ]
       },
       {
         "name": "start_time",
@@ -1122,6 +1129,12 @@ export const OPERATIONS: OperationSpec[] = [
         "in": "query",
         "type": "integer",
         "description": "unix timestamp between 6 months ago and now, e.g. 1786123679."
+      },
+      {
+        "name": "start_id",
+        "in": "query",
+        "type": "integer",
+        "description": "starting from id"
       },
       {
         "name": "limit",

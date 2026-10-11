@@ -45,7 +45,7 @@
         "description": "Agent Activity Log Data model",
         "properties": {
           "action": {
-            "description": "available value: open, close, assign, reply, note, pending, spam, invalid, add_collaborator, remove_collaborator, subscribe_to_bot, unsubscribe_from_bot, opt_in_sms, opt_out_sms, opt_in_email, opt_out_email",
+            "description": "available value: open, close, assign, reply, note, pending, spam, invalid, add_collaborator, remove_collaborator, subscribe_to_bot, unsubscribe_from_bot, opt_in_sms, opt_out_sms, opt_in_email, opt_out_email, add_tag, remove_tag, add_label, remove_label",
             "title": "Action",
             "type": "string"
           },
@@ -3775,7 +3775,7 @@
             }
           },
           {
-            "description": "available action: open, close, assign, reply, note, pending, spam, invalid, add_collaborator, remove_collaborator, subscribe_to_bot, unsubscribe_from_bot, opt_in_sms, opt_out_sms, opt_in_email, opt_out_email",
+            "description": "available actions: open, close, assign, reply, note, pending, spam, invalid, add_collaborator, remove_collaborator, subscribe_to_bot, unsubscribe_from_bot, opt_in_sms, opt_out_sms, opt_in_email, opt_out_email, add_tag, remove_tag, add_label, remove_label. Allow to use multiple actions with Comma-separated actions, e.g. add_tag,remove_tag",
             "in": "query",
             "name": "action",
             "required": false,
@@ -3789,6 +3789,14 @@
             "name": "source_type",
             "required": false,
             "schema": {
+              "default": "",
+              "enum": [
+                "agent",
+                "bot",
+                "bot_user",
+                "api",
+                "webhook"
+              ],
               "type": "string"
             }
           },
@@ -3806,6 +3814,16 @@
             "description": "unix timestamp between 6 months ago and now, e.g. 1786123679. ",
             "in": "query",
             "name": "end_time",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "starting from id",
+            "in": "query",
+            "name": "start_id",
             "required": false,
             "schema": {
               "format": "int64",
